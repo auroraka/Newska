@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">閒暇</string>
+    <string name="app_name">聞新</string>
     <string name="news">資訊</string>
     <string name="reading">閱讀</string>
     <string name="science">科學</string>
@@ -56,7 +56,6 @@
     <string name="text_data">數據</string>
     <string name="text_data_summary">所有數據均來自公開API,版權屬於原作者</string>
     <string name="text_good_job">點個贊</string>
-    <string name="text_good_job_summary">去https://github.com/MummyDing/Leisure 給個star吧！</string>
     <string name="text_share_leisure">分享閒暇</string>
     <string name="text_current_version">當前版本</string>
     <string name="text_email">郵箱</string>

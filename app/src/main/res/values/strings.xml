@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Leisure</string>
+    <string name="app_name">Newska</string>
     <string name="news">News</string>
     <string name="reading">Reading</string>
     <string name="science">Science</string>
@@ -30,8 +30,8 @@
     <string name="text_refresh_success">Refresh Successfully</string>
     <string name="notify_remove_from_collection">Remove it from collection successful!!</string>
     <string name="id_collection" translatable="false">Collection</string>
-    <string name="author_email">MummyDing@outlook.com</string>
-    <string name="author_name">MummyDing</string>
+    <string name="author_email">yangtianlong111@gmail.com</string>
+    <string name="author_name">YangTianlong</string>
     <string name="collection">Collection</string>
     <string name="pages">Page　</string>
     <string name="text_language">Language</string>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">閒暇</string>
+    <string name="app_name">聞新</string>
     <string name="news">資訊</string>
     <string name="reading">閱讀</string>
     <string name="science">科學</string>
@@ -28,8 +28,8 @@
     <string name="text_remove">移除</string>
     <string name="notify_remove_from_collection">成功從收藏中移除</string>
     <string name="id_collection">Collection</string>
-    <string name="author_email">MummyDing@outlook.com</string>
-    <string name="author_name">MummyDing</string>
+    <string name="author_email">yangtianlong111@gamil.com</string>
+    <string name="author_name">YangTianlong</string>
     <string name="collection">收藏</string>
     <string name="text_auto_refresh">自動刷新</string>
     <string name="text_auto_refresh_summary">在WIFI下自動從網路加載數據</string>
