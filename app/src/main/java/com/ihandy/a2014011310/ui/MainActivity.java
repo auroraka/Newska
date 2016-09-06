@@ -37,7 +37,7 @@ import com.ihandy.a2014011310.R;
 import com.ihandy.a2014011310.support.Settings;
 import com.ihandy.a2014011310.support.Utils;
 import com.ihandy.a2014011310.support.CONSTANT;
-//import com.ihandy.a2014011310.about.AboutActivity;
+import com.ihandy.a2014011310.ui.about.AboutActivity;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener{
     private Toolbar toolbar;
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //currentFragment = new DailyFragment();
         //switchFragment();
 
-        //Utils.DLog("------version: "+Utils.getVersion());
+        Utils.DLog("------version: "+Utils.getVersion());
 
     }
 
@@ -111,14 +111,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 .addProfiles(new ProfileDrawerItem().withIcon(R.drawable.logo)
                         .withEmail(getString(R.string.author_email))
                         .withName(getString(R.string.author_name)))
-//                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
-//                    @Override
-//                    public boolean onProfileChanged(View view, IProfile profile, boolean current) {
-//                        Intent i = new Intent(MainActivity.this, AboutActivity.class);
-//                        startActivity(i);
-//                        return false;
-//                    }
-//                })
+                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                    @Override
+                    public boolean onProfileChanged(View view, IProfile profile, boolean current) {
+                        Intent i = new Intent(MainActivity.this, AboutActivity.class);
+                        startActivity(i);
+                        return false;
+                    }
+                })
                 .build();
 //        drawer = new DrawerBuilder().withActivity(this)
 //                .withToolbar(toolbar)

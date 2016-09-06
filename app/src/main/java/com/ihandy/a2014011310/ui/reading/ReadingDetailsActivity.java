@@ -17,38 +17,43 @@
  *  along with Leisure.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ihandy.a2014011310.about;
+package com.ihandy.a2014011310.ui.reading;
 
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.ihandy.a2014011310.R;
+import com.ihandy.a2014011310.api.ReadingApi;
+import com.ihandy.a2014011310.model.reading.BookBean;
 import com.ihandy.a2014011310.support.CONSTANT;
-import com.ihandy.a2014011310.support.HttpUtil;
 import com.ihandy.a2014011310.support.Settings;
 import com.ihandy.a2014011310.support.Utils;
-import com.ihandy.a2014011310.ui.setting.SettingsFragment;
+import com.ihandy.a2014011310.support.adapter.PagerAdapter;
 import com.ihandy.a2014011310.ui.support.SwipeBackActivity;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
+import com.ihandy.a2014011310.ui.support.WebViewUrlActivity;
 
-import java.io.IOException;
-
-public class AboutActivity extends SwipeBackActivity implements SensorEventListener {
-
+public class ReadingDetailsActivity extends SwipeBackActivity implements SensorEventListener {
+    public static BookBean bookBean;
+    private ViewPager viewPager;
+    private PagerAdapter adapter;
     private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private int mLang = -1;
+
     private SensorManager mSensorManager;
     private boolean isShakeMode = false;
-    private int mLang = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,7 @@ public class AboutActivity extends SwipeBackActivity implements SensorEventListe
             Utils.changeLanguage(this, mLang);
         }
 
+
         //set Theme
         if(Settings.isNightMode){
             this.setTheme(R.style.NightTheme);
@@ -67,11 +73,22 @@ public class AboutActivity extends SwipeBackActivity implements SensorEventListe
             this.setTheme(R.style.DayTheme);
         }
 
-        setContentView(R.layout.activity_about);
+        setContentView(R.layout.activity_reading_details);
+        initData();
 
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
+    }
+    private void  initData(){
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(getString(R.string.about));
+        for(String title: ReadingApi.bookTab_Titles){
+            tabLayout.addTab(tabLayout.newTab().setText(title));
+        }
+        bookBean = (BookBean) getIntent().getSerializableExtra(getString(R.string.id_book));
+        getSupportActionBar().setTitle(bookBean.getTitle());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,12 +96,42 @@ public class AboutActivity extends SwipeBackActivity implements SensorEventListe
                 onBackPressed();
             }
         });
-
-        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-
-
-        getFragmentManager().beginTransaction().replace(R.id.framelayout,new AboutFragment()).commit();
+        adapter = new PagerAdapter(getSupportFragmentManager(),ReadingApi.bookTab_Titles) {
+            @Override
+            public Fragment getItem(int position) {
+                ReadingTabFragment fragment = new ReadingTabFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt(getString(R.string.id_pos),position);
+                fragment.setArguments(bundle);
+                return fragment;
+            }
+        };
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_ebook, menu);
+        if(Utils.hasString(bookBean.getEbook_url())==false)
+            menu.getItem(0).setVisible(false);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_ebook:
+                Intent intent = new Intent(ReadingDetailsActivity.this, WebViewUrlActivity.class);
+                intent.putExtra(getString(R.string.id_url),ReadingApi.readEBook+Utils.RegexFind("/[0-9]+/",bookBean.getEbook_url()));
+                startActivity(intent);
+            break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
 
     @Override
     protected void onResume() {
@@ -127,5 +174,4 @@ public class AboutActivity extends SwipeBackActivity implements SensorEventListe
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
-
 }
