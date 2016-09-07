@@ -31,6 +31,8 @@
     <string name="notify_remove_from_collection">Remove it from collection successful!!</string>
     <string name="id_collection" translatable="false">Collection</string>
     <string name="author_email">yangtianlong111@gmail.com</string>
+    <string name="student_id">2014011310</string>
+    <string name="student_class">CST.42</string>
     <string name="author_name">YangTianlong</string>
     <string name="collection">Collection</string>
     <string name="pages">Page　</string>
@@ -87,6 +89,8 @@
     <string name="text_copyright">Copyright</string>
     <string name="text_data">Data</string>
     <string name="text_email">E-Mail</string>
+    <string name="text_student_id">Student ID</string>
+    <string name="text_student_class">Class</string>
     <string name="text_data_summary">The data are from public API,all rights belong to original author</string>
     <string name="text_attention">Attention</string>
     <string name="text_attention_summary">This app is not allowed for COMMERCIAL Purposes</string>

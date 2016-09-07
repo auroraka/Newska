@@ -48,10 +48,14 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
 
     private Preference mAppIntro;
     private Preference mEmail;
+    private Preference mStudentID;
+    private Preference mStudentClass;
 
 
     private final String APP_INTRO = "app_intro";
     private final String EMAIL = "email";
+    private final String STUDENT_ID = "student_id";
+    private final String STUDNET_CLASS = "student_class";
 
 
     private ProgressBar progressBar;
@@ -62,9 +66,13 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
 
         mAppIntro = findPreference(APP_INTRO);
         mEmail = findPreference(EMAIL);
+        mStudentID  =findPreference(STUDENT_ID);
+        mStudentClass=findPreference(STUDNET_CLASS);
 
         mAppIntro.setOnPreferenceClickListener(this);
         mEmail.setOnPreferenceClickListener(this);
+        mStudentID.setOnPreferenceClickListener(this);
+        mStudentClass.setOnPreferenceClickListener(this);
 
         progressBar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
     }
@@ -78,6 +86,10 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
             startActivity(toIntro);
         }else if(mEmail == preference){
             Utils.copyToClipboard(getView(),getString(R.string.author_email));
+        }else if (mStudentID == preference){
+            Utils.copyToClipboard(getView(),getString(R.string.student_id));
+        }else if (mStudentClass == preference){
+            Utils.copyToClipboard(getView(),getString(R.string.student_class));
         }
         return false;
     }

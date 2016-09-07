@@ -12,6 +12,14 @@
         android:title="@string/text_author"
         android:summary="@string/author_name">
         <Preference
+            android:key="student_id"
+            android:title="@string/text_student_id"
+            android:summary="@string/student_id" />
+        <Preference
+            android:key="student_class"
+            android:title="@string/text_student_class"
+            android:summary="@string/student_class" />
+        <Preference
             android:key="email"
             android:title="@string/text_email"
             android:summary="@string/author_email" />
