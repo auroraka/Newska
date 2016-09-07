@@ -37,9 +37,6 @@ import android.widget.Toast;
 import com.ihandy.a2014011310.NewskaApplication;
 import com.ihandy.a2014011310.R;
 import com.ihandy.a2014011310.database.DatabaseHelper;
-import com.ihandy.a2014011310.database.table.DailyTable;
-import com.ihandy.a2014011310.database.table.NewsTable;
-import com.ihandy.a2014011310.database.table.ReadingTable;
 import com.ihandy.a2014011310.database.table.ScienceTable;
 
 
@@ -179,17 +176,13 @@ public class Utils {
         DatabaseHelper mHelper = DatabaseHelper.instance(mContext);
         SQLiteDatabase db = mHelper.getWritableDatabase();
 
-        db.execSQL(mHelper.DELETE_TABLE_DATA + DailyTable.NAME);
-      //  db.execSQL(DailyTable.CREATE_TABLE);
-
-        db.execSQL(mHelper.DELETE_TABLE_DATA + NewsTable.NAME);
-      //  db.execSQL(NewsTable.CREATE_TABLE);
-
-        db.execSQL(mHelper.DELETE_TABLE_DATA + ReadingTable.NAME);
-      //  db.execSQL(ReadingTable.CREATE_TABLE);
+//        db.execSQL(mHelper.DELETE_TABLE_DATA + DailyTable.NAME);
+//
+//        db.execSQL(mHelper.DELETE_TABLE_DATA + NewsTable.NAME);
+//
+//        db.execSQL(mHelper.DELETE_TABLE_DATA + ReadingTable.NAME);
 
         db.execSQL(mHelper.DELETE_TABLE_DATA + ScienceTable.NAME);
-      //  db.execSQL(ScienceTable.CREATE_TABLE);
 
     }
 

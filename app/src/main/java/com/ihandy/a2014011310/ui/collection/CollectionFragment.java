@@ -22,14 +22,8 @@ package com.ihandy.a2014011310.ui.collection;
 import android.support.v7.widget.RecyclerView;
 
 import com.ihandy.a2014011310.R;
-import com.ihandy.a2014011310.database.cache.collection.CollectionDailyCache;
-import com.ihandy.a2014011310.database.cache.collection.CollectionNewsCache;
-import com.ihandy.a2014011310.database.cache.collection.CollectionReadingCache;
 import com.ihandy.a2014011310.database.cache.collection.CollectionScienceCache;
 import com.ihandy.a2014011310.support.CONSTANT;
-import com.ihandy.a2014011310.support.adapter.DailyAdapter;
-import com.ihandy.a2014011310.support.adapter.NewsAdapter;
-import com.ihandy.a2014011310.support.adapter.ReadingAdapter;
 import com.ihandy.a2014011310.support.adapter.ScienceAdapter;
 import com.ihandy.a2014011310.ui.support.BaseListFragment;
 
@@ -53,15 +47,15 @@ public class CollectionFragment extends BaseListFragment {
     @Override
     protected void onCreateCache() {
         switch (pos){
-            case 0:
-                cache = new CollectionDailyCache(handler);
-                break;
-            case 1:
-                cache = new CollectionReadingCache(handler);
-                break;
-            case 2:
-                cache = new CollectionNewsCache(handler);
-                break;
+//            case 0:
+//                cache = new CollectionDailyCache(handler);
+//                break;
+//            case 1:
+//                cache = new CollectionReadingCache(handler);
+//                break;
+//            case 2:
+//                cache = new CollectionNewsCache(handler);
+//                break;
             case 3:
                 cache = new CollectionScienceCache(handler);
                 break;
@@ -71,12 +65,12 @@ public class CollectionFragment extends BaseListFragment {
     @Override
     protected RecyclerView.Adapter bindAdapter() {
         switch (pos){
-            case 0:
-                return new DailyAdapter(getContext(),cache);
-            case 1:
-                return new ReadingAdapter(getContext(),cache);
-            case 2:
-                return new NewsAdapter(getContext(),cache);
+//            case 0:
+//                return new DailyAdapter(getContext(),cache);
+//            case 1:
+//                return new ReadingAdapter(getContext(),cache);
+//            case 2:
+//                return new NewsAdapter(getContext(),cache);
             case 3:
                 return new ScienceAdapter(getContext(),cache);
         }

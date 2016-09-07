@@ -56,10 +56,6 @@ import com.ihandy.a2014011310.support.Settings;
 import com.ihandy.a2014011310.support.Utils;
 import com.ihandy.a2014011310.ui.about.AboutActivity;
 import com.ihandy.a2014011310.ui.collection.BaseCollectionFragment;
-import com.ihandy.a2014011310.ui.daily.DailyFragment;
-import com.ihandy.a2014011310.ui.news.BaseNewsFragment;
-import com.ihandy.a2014011310.ui.reading.BaseReadingFragment;
-import com.ihandy.a2014011310.ui.reading.SearchBooksActivity;
 import com.ihandy.a2014011310.ui.science.BaseScienceFragment;
 import com.ihandy.a2014011310.ui.setting.SettingsActivity;
 
@@ -118,20 +114,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
-        currentFragment = new DailyFragment();
+        currentFragment = new BaseScienceFragment();
         switchFragment();
 
         Utils.DLog("------version: "+Utils.getVersion());
     }
 
     private void switchFragment(){
-        if(currentFragment instanceof DailyFragment){
-            switchFragment(currentFragment, getString(R.string.daily), R.menu.menu_daily);
-        }else if(currentFragment instanceof BaseReadingFragment){
-            switchFragment(currentFragment, getString(R.string.reading),R.menu.menu_reading);
-        }else if(currentFragment instanceof BaseNewsFragment){
-            switchFragment(currentFragment, getString(R.string.news),R.menu.menu_news);
-        }else if(currentFragment instanceof BaseScienceFragment){
+        if(currentFragment instanceof BaseScienceFragment){
             switchFragment(currentFragment, getString(R.string.science),R.menu.menu_science);
         }else if(currentFragment instanceof BaseCollectionFragment){
             switchFragment(currentFragment,getString(R.string.collection),R.menu.menu_daily);
@@ -194,25 +184,25 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         switch (drawerItem.getIdentifier()) {
-                            case R.mipmap.ic_home:
-                                if (currentFragment instanceof DailyFragment) {
-                                    return false;
-                                }
-                                currentFragment = new DailyFragment();
-                                break;
-                            case R.mipmap.ic_reading:
-                                if (currentFragment instanceof BaseReadingFragment) {
-                                    return false;
-                                }
-                                new BaseNewsFragment();
-                                currentFragment = new BaseReadingFragment();
-                                break;
-                            case R.mipmap.ic_news:
-                                if (currentFragment instanceof BaseNewsFragment) {
-                                    return false;
-                                }
-                                currentFragment = new BaseNewsFragment();
-                                break;
+//                            case R.mipmap.ic_home:
+//                                if (currentFragment instanceof DailyFragment) {
+//                                    return false;
+//                                }
+//                                currentFragment = new DailyFragment();
+//                                break;
+//                            case R.mipmap.ic_reading:
+//                                if (currentFragment instanceof BaseReadingFragment) {
+//                                    return false;
+//                                }
+//                                new BaseNewsFragment();
+//                                currentFragment = new BaseReadingFragment();
+//                                break;
+//                            case R.mipmap.ic_news:
+//                                if (currentFragment instanceof BaseNewsFragment) {
+//                                    return false;
+//                                }
+//                                currentFragment = new BaseNewsFragment();
+//                                break;
                             case R.mipmap.ic_science:
                                 if (currentFragment instanceof BaseScienceFragment) {
                                     return false;
@@ -257,50 +247,50 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-            case R.id.menu_home:
-                drawer.setSelection(R.mipmap.ic_home);
-                currentFragment = new DailyFragment();
-                break;
-            case R.id.menu_reading:
-                drawer.setSelection(R.mipmap.ic_reading);
-                currentFragment = new BaseReadingFragment();
-                break;
-            case R.id.menu_news:
-                drawer.setSelection(R.mipmap.ic_news);
-                currentFragment = new BaseNewsFragment();
-                break;
+//            case R.id.menu_home:
+//                drawer.setSelection(R.mipmap.ic_home);
+//                currentFragment = new DailyFragment();
+//                break;
+//            case R.id.menu_reading:
+//                drawer.setSelection(R.mipmap.ic_reading);
+//                currentFragment = new BaseReadingFragment();
+//                break;
+//            case R.id.menu_news:
+//                drawer.setSelection(R.mipmap.ic_news);
+//                currentFragment = new BaseNewsFragment();
+//                break;
             case R.id.menu_science:
                 drawer.setSelection(R.mipmap.ic_science);
                 currentFragment = new BaseScienceFragment();
                 break;
-            case R.id.menu_search:
-                showSearchDialog();
-                return true;
+//            case R.id.menu_search:
+//                showSearchDialog();
+//                return true;
         }
         switchFragment();
         return super.onOptionsItemSelected(item);
     }
-    private void showSearchDialog(){
-        final EditText editText = new EditText(this);
-        editText.setGravity(Gravity.CENTER);
-        editText.setSingleLine();
-        new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.text_search_books))
-                .setIcon(R.mipmap.ic_search)
-                .setView(editText)
-                .setPositiveButton(getString(R.string.text_ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if(Utils.hasString(editText.getText().toString())){
-                            Intent intent = new Intent(MainActivity.this,SearchBooksActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putString(getString(R.string.id_search_text),editText.getText().toString());
-                            intent.putExtras(bundle);
-                            startActivity(intent);
-                        }
-                    }
-                }).show();
-    }
+//    private void showSearchDialog(){
+//        final EditText editText = new EditText(this);
+//        editText.setGravity(Gravity.CENTER);
+//        editText.setSingleLine();
+//        new AlertDialog.Builder(this)
+//                .setTitle(getString(R.string.text_search_books))
+//                .setIcon(R.mipmap.ic_search)
+//                .setView(editText)
+//                .setPositiveButton(getString(R.string.text_ok), new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        if(Utils.hasString(editText.getText().toString())){
+//                            Intent intent = new Intent(MainActivity.this,SearchBooksActivity.class);
+//                            Bundle bundle = new Bundle();
+//                            bundle.putString(getString(R.string.id_search_text),editText.getText().toString());
+//                            intent.putExtras(bundle);
+//                            startActivity(intent);
+//                        }
+//                    }
+//                }).show();
+//    }
 
     @Override
     public void onBackPressed() {
