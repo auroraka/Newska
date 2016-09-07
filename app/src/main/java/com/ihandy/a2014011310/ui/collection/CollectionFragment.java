@@ -26,35 +26,37 @@ public class CollectionFragment extends BaseListFragment {
 
     @Override
     protected void onCreateCache() {
-        switch (pos){
-//            case 0:
-//                cache = new CollectionDailyCache(handler);
+        cache = new CollectionScienceCache(handler);
+//        switch (pos){
+////            case 0:
+////                cache = new CollectionDailyCache(handler);
+////                break;
+////            case 1:
+////                cache = new CollectionReadingCache(handler);
+////                break;
+////            case 2:
+////                cache = new CollectionNewsCache(handler);
+////                break;
+//            case 3:
+//                cache = new CollectionScienceCache(handler);
 //                break;
-//            case 1:
-//                cache = new CollectionReadingCache(handler);
-//                break;
-//            case 2:
-//                cache = new CollectionNewsCache(handler);
-//                break;
-            case 3:
-                cache = new CollectionScienceCache(handler);
-                break;
-        }
+//        }
     }
 
     @Override
     protected RecyclerView.Adapter bindAdapter() {
-        switch (pos){
-//            case 0:
-//                return new DailyAdapter(getContext(),cache);
-//            case 1:
-//                return new ReadingAdapter(getContext(),cache);
-//            case 2:
-//                return new NewsAdapter(getContext(),cache);
-            case 3:
-                return new ScienceAdapter(getContext(),cache);
-        }
-        return null;
+        return new ScienceAdapter(getContext(),cache);
+//        switch (pos){
+////            case 0:
+////                return new DailyAdapter(getContext(),cache);
+////            case 1:
+////                return new ReadingAdapter(getContext(),cache);
+////            case 2:
+////                return new NewsAdapter(getContext(),cache);
+//            case 3:
+//                return new ScienceAdapter(getContext(),cache);
+//        }
+//        return null;
     }
 
     @Override

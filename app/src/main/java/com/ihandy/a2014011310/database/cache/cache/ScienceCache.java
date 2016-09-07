@@ -38,10 +38,8 @@ public class ScienceCache extends BaseCache<ArticleBean> {
         for(int i=0;i<mList.size();i++){
             ArticleBean articleBean = mList.get(i);
             values.put(ScienceTable.TITLE,articleBean.getTitle());
-            values.put(ScienceTable.DESCRIPTION,articleBean.getSummary());
             values.put(ScienceTable.IMAGE,articleBean.getImage_info().getUrl());
             values.put(ScienceTable.COMMENT_COUNT,articleBean.getReplies_count());
-            values.put(ScienceTable.INFO,articleBean.getInfo());
             values.put(ScienceTable.URL,articleBean.getUrl());
             values.put(ScienceTable.CATEGORY,mCategory);
             values.put(ScienceTable.IS_COLLECTED,articleBean.getIs_collected());
@@ -53,11 +51,9 @@ public class ScienceCache extends BaseCache<ArticleBean> {
     @Override
     protected void putData(ArticleBean articleBean) {
         values.put(ScienceTable.TITLE,articleBean.getTitle());
-        values.put(ScienceTable.DESCRIPTION,articleBean.getSummary());
         values.put(ScienceTable.IMAGE,articleBean.getImage_info().getUrl());
         values.put(ScienceTable.COMMENT_COUNT,articleBean.getReplies_count());
         values.put(ScienceTable.URL,articleBean.getUrl());
-        values.put(ScienceTable.INFO,articleBean.getInfo());
         db.insert(ScienceTable.COLLECTION_NAME, null, values);
     }
 
@@ -74,14 +70,12 @@ public class ScienceCache extends BaseCache<ArticleBean> {
         while (cursor.moveToNext()){
             ArticleBean articleBean = new ArticleBean();
             articleBean.setTitle(cursor.getString(ScienceTable.ID_TITLE));
-            articleBean.setSummary(cursor.getString(ScienceTable.ID_DESCRIPTION));
             if(articleBean.getImage_info() == null){
                 Utils.DLog(" "+articleBean.getImage_info());
             }else {
                 articleBean.getImage_info().setUrl(cursor.getString(ScienceTable.ID_IMAGE));
             }
             articleBean.setReplies_count(cursor.getInt(ScienceTable.ID_COMMENT_COUNT));
-            articleBean.setInfo(cursor.getString(ScienceTable.ID_INFO));
             articleBean.setIs_collected(cursor.getInt(ScienceTable.ID_IS_COLLECTED));
             articleBean.setUrl(cursor.getString(ScienceTable.ID_URL));
             mList.add(articleBean);

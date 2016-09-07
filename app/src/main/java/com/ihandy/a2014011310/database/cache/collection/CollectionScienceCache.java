@@ -24,11 +24,9 @@ public class CollectionScienceCache extends BaseCollectionCache<ArticleBean> {
         while (cursor.moveToNext()){
             ArticleBean articleBean = new ArticleBean();
             articleBean.setTitle(cursor.getString(table.ID_TITLE));
-            articleBean.setInfo(cursor.getString(table.ID_INFO));
             articleBean.getImage_info().setUrl(cursor.getString(table.ID_IMAGE));
             articleBean.setUrl(cursor.getString(table.ID_URL));
             articleBean.setReplies_count(cursor.getShort(table.ID_COMMENT_COUNT));
-            articleBean.setSummary(cursor.getString(table.ID_DESCRIPTION));
             mList.add(articleBean);
         }
         mHandler.sendEmptyMessage(CONSTANT.ID_FROM_CACHE);

@@ -38,7 +38,6 @@
         <activity android:name=".ui.about.AuthorIntroActivity" />
         <activity android:name=".ui.science.ScienceDetailsActivity"/>
 
-
     </application>
 
 </manifest>

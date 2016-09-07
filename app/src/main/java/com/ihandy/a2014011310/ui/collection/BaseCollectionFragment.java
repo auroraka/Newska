@@ -13,8 +13,7 @@ public class BaseCollectionFragment extends AbsTopNavigationFragment{
     private PagerAdapter pagerAdapter;
     @Override
     protected PagerAdapter initPagerAdapter() {
-        String [] tabTitles ={getContext().getString(R.string.daily),getContext().getString(R.string.reading)
-                ,getContext().getString(R.string.news),getContext().getString(R.string.science)};
+        String [] tabTitles ={getContext().getString(R.string.science)};
         pagerAdapter = new PagerAdapter(getChildFragmentManager(),tabTitles) {
             @Override
             public Fragment getItem(int position) {
