@@ -1,21 +1,3 @@
-/*
- *  Copyright (C) 2015 MummyDing
- *
- *  This file is part of Leisure( <https://github.com/MummyDing/Leisure> )
- *
- *  Leisure is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *                             ｀
- *  Leisure is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with Leisure.  If not, see <http://www.gnu.org/licenses/>.
- */
 
 package com.ihandy.a2014011310.support.adapter;
 
@@ -46,12 +28,6 @@ import com.ihandy.a2014011310.support.adapter.ScienceAdapter.ViewHolder;
 
 
 
-/**
- * Created by mummyding on 2015-11-18.<br>
- * Science RecyclerView Adapter. It can provide different view according to Cache Type.<br>
- * @author MummyDing
- * @version Leisure 1.0
- */
 public class ScienceAdapter extends BaseListAdapter<ArticleBean,ViewHolder>{
 
 

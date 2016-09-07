@@ -16,11 +16,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.ihandy.a2014011310.NewskaApplication;
 
 
-/**
- * Created by MummyDing on 16-2-10.
- * GitHub: https://github.com/MummyDing
- * Blog: http://blog.csdn.net/mummyding
- */
 public class ImageUtil {
     public static int getImageColor(Bitmap bitmap){
         Palette palette = Palette.from(bitmap).generate();

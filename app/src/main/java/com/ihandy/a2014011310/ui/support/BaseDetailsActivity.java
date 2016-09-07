@@ -117,9 +117,6 @@ public abstract class BaseDetailsActivity extends SwipeBackActivity {
     }
 
     protected void initView() {
-        /**
-         * 测试用 非正式代码 ---By MummyDing
-         */
 
         //对toolbar进行下移
         int height = DisplayUtil.getScreenHeight(NewskaApplication.AppContext);

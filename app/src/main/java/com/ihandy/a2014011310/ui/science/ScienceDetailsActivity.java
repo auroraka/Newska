@@ -16,11 +16,6 @@ import com.ihandy.a2014011310.support.HttpUtil;
 import com.ihandy.a2014011310.support.Settings;
 import com.ihandy.a2014011310.ui.support.BaseDetailsActivity;
 
-/**
- * Created by MummyDing on 16-2-18.
- * GitHub: https://github.com/MummyDing
- * Blog: http://blog.csdn.net/mummyding
- */
 public class ScienceDetailsActivity extends BaseDetailsActivity {
     private ScienceCache mCache;
     private ArticleBean articleBean;

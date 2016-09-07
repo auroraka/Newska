@@ -81,11 +81,6 @@
     <string name="text_share_leisure">Share Leisure</string>
     <string name="text_check_update">Check Update</string>
     <string name="text_good_job">Good Job</string>
-    <string name="text_good_job_summary">Give me a star at https://github.com/MummyDing/Leisure</string>
-    <string name="text_blog">Blog</string>
-    <string name="author_blog">http://blog.csdn.net/mummyding</string>
-    <string name="text_author_github">Author GitHub</string>
-    <string name="author_github">https://github.com/MummyDing</string>
     <string name="text_copyright">Copyright</string>
     <string name="text_data">Data</string>
     <string name="text_email">E-Mail</string>
@@ -99,9 +94,6 @@
     <string name="notify_current_is_latest">Current Version is the latest Version</string>
     <string name="notify_find_new_version">"Find new Version "</string>
     <string name="notif_info_copied">Info copied to Clipboard! You can paste it to an edit area</string>
-    <string name="project_url">https://github.com/MummyDing/Leisure/</string>
-    <string name="text_share_info">Welcome to use Leisure,it contains Zhihu Daily,Guokr Scientific,XinhuaNet News and Douban Books.You can download it at http://coolapk.com/apk/com.mummyding.app.leisure</string>
-    <string name="text_demo_video">Demo Video</string>
     <string name="text_app_intro">App Introduction</string>
     <string name="text_author_intro">Author Introduction</string>
     <string name="id_title">title</string>

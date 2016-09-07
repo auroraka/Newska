@@ -28,9 +28,6 @@ import com.ihandy.a2014011310.support.Settings;
  * 滑动关闭页面基类，使用时继承此类并使用BlankTheme主题即可
  */
 
-/**
- * this file was written by @NashLegend {https://github.com/NashLegend}  -- MummyDing
- */
 public class SwipeBackActivity extends AppCompatActivity {
 
     private SwipeLayout swipeLayout;

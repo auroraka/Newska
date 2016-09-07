@@ -6,11 +6,6 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 
-/**
- * Created by MummyDing on 16-2-4.
- * GitHub: https://github.com/MummyDing
- * Blog: http://blog.csdn.net/mummyding
- */
 public class DisplayUtil {
 
 
