@@ -19,7 +19,6 @@
 
 package com.ihandy.a2014011310.ui.about;
 
-import com.ihandy.a2014011310.support.CONSTANT;
 import com.ihandy.a2014011310.ui.support.WebViewUrlActivity;
 
 /**
@@ -27,15 +26,9 @@ import com.ihandy.a2014011310.ui.support.WebViewUrlActivity;
  * GitHub: https://github.com/MummyDing/
  * Blog: http://blog.csdn.net/mummyding
  */
-public class DemoVideoActivity extends WebViewUrlActivity{
-
+public class AuthorIntroActivity extends WebViewUrlActivity {
     @Override
     protected void loadData() {
-        webView.post(new Runnable() {
-            @Override
-            public void run() {
-                webView.loadUrl(CONSTANT.DEMO_VIDEO_URL);
-            }
-        });
+        webView.loadUrl("file:///android_asset/AuthorIntroduction.html");
     }
 }

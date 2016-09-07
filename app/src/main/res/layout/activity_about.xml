@@ -31,7 +31,7 @@
             android:layout_marginTop="15dp"
             />
         <TextView
-            android:text="MummyDing"
+            android:text="YangTianlong"
             android:textColor="?attr/barTitleColor"
             android:textSize="18sp"
             android:layout_below="@id/author"

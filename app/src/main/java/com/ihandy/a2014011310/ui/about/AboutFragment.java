@@ -106,27 +106,27 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
         }else if(mCheckUpdate == preference){
             progressBar.setVisibility(View.VISIBLE);
 
-            //Request.Builder builder = new Request.Builder();
-            //builder.url(CONSTANT.VERSION_URL);
-//            Request request = builder.build();
-//            HttpUtil.enqueue(request, new Callback() {
-//                @Override
-//                public void onFailure(Request request, IOException e) {
-//                    Snackbar.make(getView(), R.string.hint_fail_check_update, Snackbar.LENGTH_SHORT).show();
-//                    handle.sendEmptyMessage(1);
-//                }
-//
-//                @Override
-//                public void onResponse(Response response) throws IOException {
-//                    String latestVersion = response.body().string();
-//                    if (CONSTANT.CURRENT_VERSION.equals(latestVersion.trim())) {
-//                        Snackbar.make(getView(), getString(R.string.notify_current_is_latest), Snackbar.LENGTH_SHORT).show();
-//                    } else {
-//                        Snackbar.make(getView(), getString(R.string.notify_find_new_version) + latestVersion, Snackbar.LENGTH_SHORT).show();
-//                    }
-//                    handle.sendEmptyMessage(1);
-//                }
-//            });
+            Request.Builder builder = new Request.Builder();
+            builder.url(CONSTANT.VERSION_URL);
+            Request request = builder.build();
+            HttpUtil.enqueue(request, new Callback() {
+                @Override
+                public void onFailure(Request request, IOException e) {
+                    Snackbar.make(getView(), R.string.hint_fail_check_update, Snackbar.LENGTH_SHORT).show();
+                    handle.sendEmptyMessage(1);
+                }
+
+                @Override
+                public void onResponse(Response response) throws IOException {
+                    String latestVersion = response.body().string();
+                    if (CONSTANT.CURRENT_VERSION.equals(latestVersion.trim())) {
+                        Snackbar.make(getView(), getString(R.string.notify_current_is_latest), Snackbar.LENGTH_SHORT).show();
+                    } else {
+                        Snackbar.make(getView(), getString(R.string.notify_find_new_version) + latestVersion, Snackbar.LENGTH_SHORT).show();
+                    }
+                    handle.sendEmptyMessage(1);
+                }
+            });
 
         }else if(mStarProject == preference){
             Utils.copyToClipboard(getView(), getString(R.string.project_url));

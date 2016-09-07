@@ -26,7 +26,11 @@ package com.ihandy.a2014011310.support;
 public class CONSTANT {
     public static final String TYPE_UTF8_CHARSET = "charset=UTF-8";
 
-    public static final String CURRENT_VERSION = "1.1";
+    public static final String VERSION_URL ="https://raw.githubusercontent.com/MummyDing/Leisure/master/currentVersion.txt"; //"https://raw.githubusercontent.com/MummyDing/Leisure/master/currentVersion.txt";
+
+    public static final String CURRENT_VERSION = "2.1";
+
+    public static final String DEMO_VIDEO_URL = "http://v.qq.com/page/l/e/8/l0176duy7e8.html";
 
     public static final String MONTH [] =
             {"","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"};
