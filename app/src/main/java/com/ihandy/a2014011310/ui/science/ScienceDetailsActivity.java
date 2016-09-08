@@ -44,10 +44,15 @@ public class ScienceDetailsActivity extends BaseDetailsActivity {
                 topImage.setTranslationY(Math.max(-scrollY / 2, -DisplayUtil.dip2px(getBaseContext(), 170)));
             }
         });
-        contentView.loadUrl(engBean.getUrl());
+        String url=engBean.getUrl();
+        if (url!=null) {
+            contentView.loadUrl(url);
+        }else{
+            contentView.loadUrl("file:///android_asset/notfound.html");
+        }
 
         if(HttpUtil.isWIFI == true || Settings.getInstance().getBoolean(Settings.NO_PIC_MODE, false) == false) {
-            String url=engBean.getImage_url();
+            url=engBean.getImage_url();
             if (url!=null) {
                 setMainContentBg(url);
             }

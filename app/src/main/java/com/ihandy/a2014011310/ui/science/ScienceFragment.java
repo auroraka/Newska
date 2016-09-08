@@ -36,7 +36,8 @@ public class ScienceFragment extends BaseListFragment{
 
     @Override
     protected void loadFromCache() {
-        cache.loadFromCache();
+        cache.load();
+        //cache.loadFromCache();
     }
 
     @Override

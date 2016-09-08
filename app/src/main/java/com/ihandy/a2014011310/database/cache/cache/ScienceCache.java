@@ -45,7 +45,11 @@ public class ScienceCache extends BaseCache<EngBean> {
                 values.put(ScienceTable.IMAGE, engBean.getImage_url());
             }
             values.put(ScienceTable.COMMENT_COUNT,engBean.getOrigin());
-            values.put(ScienceTable.URL,engBean.getUrl());
+            if (engBean.source==null){
+                values.put(ScienceTable.URL,"");
+            }else{
+                values.put(ScienceTable.URL,engBean.getUrl());
+            }
             values.put(ScienceTable.CATEGORY,mCategory);
             values.put(ScienceTable.IS_COLLECTED,engBean.getIs_collected());
             db.insert(ScienceTable.NAME,null,values);
@@ -62,35 +66,44 @@ public class ScienceCache extends BaseCache<EngBean> {
             values.put(ScienceTable.IMAGE, engBean.getImage_url());
         }
         values.put(ScienceTable.COMMENT_COUNT,engBean.getOrigin());
-        values.put(ScienceTable.URL,engBean.getUrl());
+        if (engBean.source==null){
+            values.put(ScienceTable.URL,"");
+        }else{
+            values.put(ScienceTable.URL,engBean.getUrl());
+        }
         db.insert(ScienceTable.COLLECTION_NAME, null, values);
     }
 
     @Override
     public synchronized void loadFromCache() {
-        mList.clear();
-        String sql = null;
-        if(mCategory == null){
-            sql = "select * from "+table.NAME;
-        }else {
-            sql = "select * from "+table.NAME +" where "+table.CATEGORY+"=\'"+mCategory+"\'";
-        }
-        Cursor cursor = query(sql);
-        while (cursor.moveToNext()){
-            EngBean engBean = new EngBean();
-            engBean.setTitle(cursor.getString(ScienceTable.ID_TITLE));
-
-            String url=cursor.getString(ScienceTable.ID_IMAGE);
-            if (!url.equals("") && engBean.imgs!=null){
-                engBean.setImage_url(url);
-            }
-            engBean.setOrigin(cursor.getString(ScienceTable.ID_COMMENT_COUNT));
-            engBean.setIs_collected(cursor.getInt(ScienceTable.ID_IS_COLLECTED));
-            engBean.setUrl(cursor.getString(ScienceTable.ID_URL));
-            mList.add(engBean);
-        }
-        mHandler.sendEmptyMessage(CONSTANT.ID_FROM_CACHE);
-        cursor.close();
+        load();
+        return;
+//        mList.clear();
+//        String sql = null;
+//        if(mCategory == null){
+//            sql = "select * from "+table.NAME;
+//        }else {
+//            sql = "select * from "+table.NAME +" where "+table.CATEGORY+"=\'"+mCategory+"\'";
+//        }
+//        Cursor cursor = query(sql);
+//        while (cursor.moveToNext()){
+//            EngBean engBean = new EngBean();
+//            engBean.setTitle(cursor.getString(ScienceTable.ID_TITLE));
+//
+//            String url=cursor.getString(ScienceTable.ID_IMAGE);
+//            if (!url.equals("") && engBean.imgs!=null){
+//                engBean.setImage_url(url);
+//            }
+//            engBean.setOrigin(cursor.getString(ScienceTable.ID_COMMENT_COUNT));
+//            engBean.setIs_collected(cursor.getInt(ScienceTable.ID_IS_COLLECTED));
+//            url=cursor.getString(ScienceTable.ID_URL);
+//            if (!url.equals("") && engBean.source!=null){
+//                engBean.setUrl(url);
+//            }
+//            mList.add(engBean);
+//        }
+//        mHandler.sendEmptyMessage(CONSTANT.ID_FROM_CACHE);
+//        cursor.close();
     }
 
     @Override
