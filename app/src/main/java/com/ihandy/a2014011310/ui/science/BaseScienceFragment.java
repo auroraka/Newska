@@ -18,13 +18,13 @@ public class BaseScienceFragment extends AbsTopNavigationFragment {
     private PagerAdapter pagerAdapter;
     @Override
     protected PagerAdapter initPagerAdapter() {
-        pagerAdapter = new PagerAdapter(getChildFragmentManager(), ScienceApi.channel_title) {
+        pagerAdapter = new PagerAdapter(getChildFragmentManager(), ScienceApi.getChannel_title()) {
             @Override
             public Fragment getItem(int position) {
                 ScienceFragment fragment = new ScienceFragment();
                 Bundle bundle = new Bundle();
                 bundle.putInt(getString(R.string.id_pos),position);
-                bundle.putSerializable(getString(R.string.id_category),ScienceApi.channel_tag[position]);
+                bundle.putSerializable(getString(R.string.id_category),ScienceApi.getChannel_tag()[position]);
                 fragment.setArguments(bundle);
                 return fragment;
             }
