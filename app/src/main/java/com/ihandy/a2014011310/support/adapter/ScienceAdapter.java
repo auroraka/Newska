@@ -48,13 +48,15 @@ public class ScienceAdapter extends BaseListAdapter<ArticleBean,ViewHolder>{
         final ArticleBean articleBean = getItem(position);
         holder.title.setText(articleBean.getTitle());
 
+        //holder.image.setImageURI(null);
         if(Settings.noPicMode && HttpUtil.isWIFI == false){
             holder.image.setImageURI(null);
         }else {
             holder.image.setImageURI(Uri.parse(articleBean.getImage_info().getUrl()));
         }
 
-        holder.comment.setText(" "+articleBean.getReplies_count());
+        //holder.comment.setText(" "+articleBean.getReplies_count());
+        holder.comment.setText(" 233");
         holder.parentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
