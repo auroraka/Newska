@@ -7,7 +7,8 @@ import android.os.Handler;
 import com.google.gson.Gson;
 import com.ihandy.a2014011310.database.cache.BaseCache;
 import com.ihandy.a2014011310.database.table.ScienceTable;
-import com.ihandy.a2014011310.model.science.ArticleBean;
+import com.ihandy.a2014011310.model.science.EngBean;
+import com.ihandy.a2014011310.model.science.EngOrigin;
 import com.ihandy.a2014011310.model.science.ScienceBean;
 import com.ihandy.a2014011310.support.CONSTANT;
 import com.ihandy.a2014011310.support.HttpUtil;
@@ -18,7 +19,7 @@ import com.squareup.okhttp.Request;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ScienceCache extends BaseCache<ArticleBean> {
+public class ScienceCache extends BaseCache<EngBean> {
 
     private ScienceTable table;
 
@@ -36,24 +37,32 @@ public class ScienceCache extends BaseCache<ArticleBean> {
         db.execSQL(mHelper.DELETE_TABLE_DATA +table.NAME+" where "+table.CATEGORY+"=\'"+mCategory+"\'");
        // db.execSQL(table.CREATE_TABLE);
         for(int i=0;i<mList.size();i++){
-            ArticleBean articleBean = mList.get(i);
-            values.put(ScienceTable.TITLE,articleBean.getTitle());
-            values.put(ScienceTable.IMAGE,articleBean.getImage_info().getUrl());
-            values.put(ScienceTable.COMMENT_COUNT,articleBean.getReplies_count());
-            values.put(ScienceTable.URL,articleBean.getUrl());
+            EngBean engBean = mList.get(i);
+            values.put(ScienceTable.TITLE,engBean.getTitle());
+            if (engBean.imgs==null){
+                values.put(ScienceTable.IMAGE,"");
+            }else {
+                values.put(ScienceTable.IMAGE, engBean.getImage_url());
+            }
+            values.put(ScienceTable.COMMENT_COUNT,engBean.getReplies_count());
+            values.put(ScienceTable.URL,engBean.getUrl());
             values.put(ScienceTable.CATEGORY,mCategory);
-            values.put(ScienceTable.IS_COLLECTED,articleBean.getIs_collected());
+            values.put(ScienceTable.IS_COLLECTED,engBean.getIs_collected());
             db.insert(ScienceTable.NAME,null,values);
         }
         db.execSQL(table.SQL_INIT_COLLECTION_FLAG);
     }
 
     @Override
-    protected void putData(ArticleBean articleBean) {
-        values.put(ScienceTable.TITLE,articleBean.getTitle());
-        values.put(ScienceTable.IMAGE,articleBean.getImage_info().getUrl());
-        values.put(ScienceTable.COMMENT_COUNT,articleBean.getReplies_count());
-        values.put(ScienceTable.URL,articleBean.getUrl());
+    protected void putData(EngBean engBean) {
+        values.put(ScienceTable.TITLE,engBean.getTitle());
+        if (engBean.imgs==null){
+            values.put(ScienceTable.IMAGE,"");
+        }else {
+            values.put(ScienceTable.IMAGE, engBean.getImage_url());
+        }
+        values.put(ScienceTable.COMMENT_COUNT,engBean.getReplies_count());
+        values.put(ScienceTable.URL,engBean.getUrl());
         db.insert(ScienceTable.COLLECTION_NAME, null, values);
     }
 
@@ -68,17 +77,17 @@ public class ScienceCache extends BaseCache<ArticleBean> {
         }
         Cursor cursor = query(sql);
         while (cursor.moveToNext()){
-            ArticleBean articleBean = new ArticleBean();
-            articleBean.setTitle(cursor.getString(ScienceTable.ID_TITLE));
-            if(articleBean.getImage_info() == null){
-                Utils.DLog(" "+articleBean.getImage_info());
-            }else {
-                articleBean.getImage_info().setUrl(cursor.getString(ScienceTable.ID_IMAGE));
+            EngBean engBean = new EngBean();
+            engBean.setTitle(cursor.getString(ScienceTable.ID_TITLE));
+
+            String url=cursor.getString(ScienceTable.ID_IMAGE);
+            if (!url.equals("") && engBean.imgs!=null){
+                engBean.setImage_url(url);
             }
-            articleBean.setReplies_count(cursor.getInt(ScienceTable.ID_COMMENT_COUNT));
-            articleBean.setIs_collected(cursor.getInt(ScienceTable.ID_IS_COLLECTED));
-            articleBean.setUrl(cursor.getString(ScienceTable.ID_URL));
-            mList.add(articleBean);
+            engBean.setReplies_count(cursor.getInt(ScienceTable.ID_COMMENT_COUNT));
+            engBean.setIs_collected(cursor.getInt(ScienceTable.ID_IS_COLLECTED));
+            engBean.setUrl(cursor.getString(ScienceTable.ID_URL));
+            mList.add(engBean);
         }
         mHandler.sendEmptyMessage(CONSTANT.ID_FROM_CACHE);
         cursor.close();
@@ -111,10 +120,19 @@ public class ScienceCache extends BaseCache<ArticleBean> {
 
                 mList.clear();
                 Gson gson = new Gson();
-                ArticleBean[] articleBeans = (gson.fromJson(response.body().string(), ScienceBean.class)).getResult();
-                for (ArticleBean articleBean : articleBeans) {
-                    mList.add(articleBean);
+                String str=response.body().string();
+                EngOrigin engOrigin=gson.fromJson(str,EngOrigin.class);
+                EngBean[] engBeans = engOrigin.data.news;
+                for (EngBean engBean : engBeans) {
+                    mList.add(engBean);
                 }
+
+//                mList.clear();
+//                Gson gson = new Gson();
+//                EngBean[] engBeans = (gson.fromJson(response.body().string(), ScienceBean.class)).getResult();
+//                for (EngBean engBean : engBeans) {
+//                    mList.add(engBean);
+//                }
 
                 for(String title:collectionTitles){
                     for(int i=0 ; i<mList.size() ; i++){

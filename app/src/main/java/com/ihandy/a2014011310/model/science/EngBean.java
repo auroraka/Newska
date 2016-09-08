@@ -1,9 +1,10 @@
 package com.ihandy.a2014011310.model.science;
 
+import java.io.Serializable;
 /**
  * Created by ytl on 2016/9/7.
  */
-public class EngBean {
+public class EngBean implements Serializable{
     public String category;
     public String country;
     public long fetched_time;
@@ -15,20 +16,70 @@ public class EngBean {
     public Source source;
     public  String title;
     public String updated_time;
+    public int is_collected=0;
 
-    public class Img{
+    public class Img implements Serializable{
         public String url;
         public String toString(){
             return url+"\n";
         }
     }
-    public class Source{
+    public class Source implements Serializable{
         public String name;
         public String url;
         public String toString(){
             return name+"\n"+url+"\n";
         }
     }
+
+
+    public String getImage_url(){
+        if (imgs!=null){
+            return imgs[0].url;
+        }else{
+            return null;
+        }
+
+    }
+    public void setImage_url(String url){
+        if (imgs==null){
+            imgs=new Img[1];
+        }
+        imgs[0].url=url;
+    }
+    public int getReplies_count() {
+        return 233;
+    }
+    public void setReplies_count(int replies_count) {
+        return;
+    }
+
+    public String getUrl() {
+        if (source ==null){
+            return null;
+        }else{
+            return source.url;
+        }
+    }
+    public void setUrl(String url) {
+        if (source==null) source=new Source();
+        source.url=url;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getIs_collected() {
+        return is_collected;
+    }
+    public void setIs_collected(int is_collected) {
+        this.is_collected = is_collected;
+    }
+
 
     public String toString(){
         String str="";

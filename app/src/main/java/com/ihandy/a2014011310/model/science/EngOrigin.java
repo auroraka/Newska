@@ -4,10 +4,13 @@ package com.ihandy.a2014011310.model.science;
  * Created by ytl on 2016/9/7.
  */
 import com.ihandy.a2014011310.model.science.EngBean;
-public class EngOrigin {
+
+import java.io.Serializable;
+
+public class EngOrigin implements Serializable {
    public Data data;
     public Meta meta;
-    public class Data{
+    public class Data implements Serializable{
         public EngBean news[];
         public long next_id;
         public String toString(){
@@ -16,7 +19,7 @@ public class EngOrigin {
                     ;
         }
     }
-    public class Meta{
+    public class Meta implements Serializable{
         public int code;
         public String toString(){
             return ""+code+"\n";

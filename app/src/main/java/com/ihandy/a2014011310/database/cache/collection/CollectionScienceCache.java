@@ -6,10 +6,10 @@ import android.os.Handler;
 
 import com.ihandy.a2014011310.database.cache.BaseCollectionCache;
 import com.ihandy.a2014011310.database.table.ScienceTable;
-import com.ihandy.a2014011310.model.science.ArticleBean;
+import com.ihandy.a2014011310.model.science.EngBean;
 import com.ihandy.a2014011310.support.CONSTANT;
 
-public class CollectionScienceCache extends BaseCollectionCache<ArticleBean> {
+public class CollectionScienceCache extends BaseCollectionCache<EngBean> {
 
 
     private ScienceTable table;
@@ -22,12 +22,15 @@ public class CollectionScienceCache extends BaseCollectionCache<ArticleBean> {
     public void loadFromCache() {
         Cursor cursor = query(table.SELECT_ALL_FROM_COLLECTION);
         while (cursor.moveToNext()){
-            ArticleBean articleBean = new ArticleBean();
-            articleBean.setTitle(cursor.getString(table.ID_TITLE));
-            articleBean.getImage_info().setUrl(cursor.getString(table.ID_IMAGE));
-            articleBean.setUrl(cursor.getString(table.ID_URL));
-            articleBean.setReplies_count(cursor.getShort(table.ID_COMMENT_COUNT));
-            mList.add(articleBean);
+            EngBean engBean = new EngBean();
+            engBean.setTitle(cursor.getString(table.ID_TITLE));
+            String url=cursor.getString(table.ID_IMAGE);
+            if (!url.equals("") && engBean.imgs!=null){
+                engBean.setImage_url(url);
+            }
+            engBean.setUrl(cursor.getString(table.ID_URL));
+            engBean.setReplies_count(cursor.getShort(table.ID_COMMENT_COUNT));
+            mList.add(engBean);
         }
         mHandler.sendEmptyMessage(CONSTANT.ID_FROM_CACHE);
     }

@@ -5,14 +5,14 @@ import java.io.Serializable;
 
 
 public class ScienceBean implements Serializable {
-    private ArticleBean[] result;
+    private EngBean[] result;
 
 
-    public ArticleBean[] getResult() {
+    public EngBean[] getResult() {
         return result;
     }
 
-    public void setResult(ArticleBean[] result) {
+    public void setResult(EngBean[] result) {
         this.result = result;
     }
 }

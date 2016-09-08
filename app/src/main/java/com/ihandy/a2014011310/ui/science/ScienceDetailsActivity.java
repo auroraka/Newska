@@ -9,7 +9,7 @@ import android.view.View;
 import com.ihandy.a2014011310.R;
 import com.ihandy.a2014011310.database.cache.cache.ScienceCache;
 import com.ihandy.a2014011310.database.table.ScienceTable;
-import com.ihandy.a2014011310.model.science.ArticleBean;
+import com.ihandy.a2014011310.model.science.EngBean;
 import com.ihandy.a2014011310.model.science.ScienceBean;
 import com.ihandy.a2014011310.support.DisplayUtil;
 import com.ihandy.a2014011310.support.HttpUtil;
@@ -18,14 +18,14 @@ import com.ihandy.a2014011310.ui.support.BaseDetailsActivity;
 
 public class ScienceDetailsActivity extends BaseDetailsActivity {
     private ScienceCache mCache;
-    private ArticleBean articleBean;
+    private EngBean engBean;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCache = new ScienceCache();
-        articleBean = (ArticleBean) getIntent().getSerializableExtra(getString(R.string.id_science));
-        isCollected = (articleBean.getIs_collected()==1? true:false);
+        engBean = (EngBean) getIntent().getSerializableExtra(getString(R.string.id_science));
+        isCollected = (engBean.getIs_collected()==1? true:false);
         initView();
     }
 
@@ -44,10 +44,13 @@ public class ScienceDetailsActivity extends BaseDetailsActivity {
                 topImage.setTranslationY(Math.max(-scrollY / 2, -DisplayUtil.dip2px(getBaseContext(), 170)));
             }
         });
-        contentView.loadUrl(articleBean.getUrl());
+        contentView.loadUrl(engBean.getUrl());
 
         if(HttpUtil.isWIFI == true || Settings.getInstance().getBoolean(Settings.NO_PIC_MODE, false) == false) {
-            setMainContentBg(articleBean.getImage_info().getUrl());
+            String url=engBean.getImage_url();
+            if (url!=null) {
+                setMainContentBg(url);
+            }
         }
 
         hideLoading();
@@ -55,18 +58,18 @@ public class ScienceDetailsActivity extends BaseDetailsActivity {
 
     @Override
     protected void removeFromCollection() {
-        mCache.execSQL(ScienceTable.updateCollectionFlag(articleBean.getTitle(), 0));
-        mCache.execSQL(ScienceTable.deleteCollectionFlag(articleBean.getTitle()));
+        mCache.execSQL(ScienceTable.updateCollectionFlag(engBean.getTitle(), 0));
+        mCache.execSQL(ScienceTable.deleteCollectionFlag(engBean.getTitle()));
     }
 
     @Override
     protected void addToCollection() {
-        mCache.execSQL(ScienceTable.updateCollectionFlag(articleBean.getTitle(),1));
-        mCache.addToCollection(articleBean);
+        mCache.execSQL(ScienceTable.updateCollectionFlag(engBean.getTitle(),1));
+        mCache.addToCollection(engBean);
     }
 
     @Override
     protected String getShareInfo() {
-        return "["+articleBean.getTitle()+"]:"+articleBean.getUrl()+" ( "+getString(R.string.text_share_from)+getString(R.string.app_name)+")";
+        return "["+engBean.getTitle()+"]:"+engBean.getUrl()+" ( "+getString(R.string.text_share_from)+getString(R.string.app_name)+")";
     }
 }

@@ -19,7 +19,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.ihandy.a2014011310.R;
 import com.ihandy.a2014011310.database.cache.ICache;
 import com.ihandy.a2014011310.database.table.ScienceTable;
-import com.ihandy.a2014011310.model.science.ArticleBean;
+import com.ihandy.a2014011310.model.science.EngBean;
 import com.ihandy.a2014011310.support.HttpUtil;
 import com.ihandy.a2014011310.support.Settings;
 import com.ihandy.a2014011310.ui.science.ScienceDetailsActivity;
@@ -28,10 +28,10 @@ import com.ihandy.a2014011310.support.adapter.ScienceAdapter.ViewHolder;
 
 
 
-public class ScienceAdapter extends BaseListAdapter<ArticleBean,ViewHolder>{
+public class ScienceAdapter extends BaseListAdapter<EngBean,ViewHolder>{
 
 
-    public ScienceAdapter(Context context, ICache<ArticleBean> cache) {
+    public ScienceAdapter(Context context, ICache<EngBean> cache) {
         super(context, cache);
     }
 
@@ -45,17 +45,20 @@ public class ScienceAdapter extends BaseListAdapter<ArticleBean,ViewHolder>{
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final ArticleBean articleBean = getItem(position);
-        holder.title.setText(articleBean.getTitle());
+        final EngBean engBean = getItem(position);
+        holder.title.setText(engBean.getTitle());
 
         //holder.image.setImageURI(null);
         if(Settings.noPicMode && HttpUtil.isWIFI == false){
             holder.image.setImageURI(null);
         }else {
-            holder.image.setImageURI(Uri.parse(articleBean.getImage_info().getUrl()));
+            String url=engBean.getImage_url();
+            if (url!=null) {
+                holder.image.setImageURI(Uri.parse(url));
+            }
         }
 
-        //holder.comment.setText(" "+articleBean.getReplies_count());
+        //holder.comment.setText(" "+engBean.getReplies_count());
         holder.comment.setText(" 233");
         holder.parentView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,9 +67,9 @@ public class ScienceAdapter extends BaseListAdapter<ArticleBean,ViewHolder>{
                 Bundle bundle = new Bundle();
 
                 if(isCollection){
-                    articleBean.setIs_collected(1);
+                    engBean.setIs_collected(1);
                 }
-                bundle.putSerializable(mContext.getString(R.string.id_science),articleBean);
+                bundle.putSerializable(mContext.getString(R.string.id_science),engBean);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
