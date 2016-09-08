@@ -47,11 +47,11 @@ public class EngBean implements Serializable{
         }
         imgs[0].url=url;
     }
-    public int getReplies_count() {
-        return 233;
+    public String getOrigin() {
+        return origin;
     }
-    public void setReplies_count(int replies_count) {
-        return;
+    public void setOrigin(String ori) {
+        origin=ori;
     }
 
     public String getUrl() {

@@ -29,7 +29,7 @@ public class CollectionScienceCache extends BaseCollectionCache<EngBean> {
                 engBean.setImage_url(url);
             }
             engBean.setUrl(cursor.getString(table.ID_URL));
-            engBean.setReplies_count(cursor.getShort(table.ID_COMMENT_COUNT));
+            engBean.setOrigin(cursor.getString(table.ID_COMMENT_COUNT));
             mList.add(engBean);
         }
         mHandler.sendEmptyMessage(CONSTANT.ID_FROM_CACHE);

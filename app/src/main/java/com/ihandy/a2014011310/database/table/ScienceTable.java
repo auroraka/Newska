@@ -32,7 +32,7 @@ public class ScienceTable {
             INFO+" text,"+
             IMAGE+" text,"+
             DESCRIPTION+" text,"+
-            COMMENT_COUNT+" integer,"+
+            COMMENT_COUNT+" text,"+
             URL +" text,"+
             CATEGORY+" text,"+
             IS_COLLECTED+" integer)";
@@ -43,7 +43,7 @@ public class ScienceTable {
             INFO+" text,"+
             IMAGE+" text,"+
             DESCRIPTION+" text," +
-            COMMENT_COUNT+" integer,"+
+            COMMENT_COUNT+" text,"+
             URL +" text,"+
             CATEGORY+" text)";
 

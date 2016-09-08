@@ -44,7 +44,7 @@ public class ScienceCache extends BaseCache<EngBean> {
             }else {
                 values.put(ScienceTable.IMAGE, engBean.getImage_url());
             }
-            values.put(ScienceTable.COMMENT_COUNT,engBean.getReplies_count());
+            values.put(ScienceTable.COMMENT_COUNT,engBean.getOrigin());
             values.put(ScienceTable.URL,engBean.getUrl());
             values.put(ScienceTable.CATEGORY,mCategory);
             values.put(ScienceTable.IS_COLLECTED,engBean.getIs_collected());
@@ -61,7 +61,7 @@ public class ScienceCache extends BaseCache<EngBean> {
         }else {
             values.put(ScienceTable.IMAGE, engBean.getImage_url());
         }
-        values.put(ScienceTable.COMMENT_COUNT,engBean.getReplies_count());
+        values.put(ScienceTable.COMMENT_COUNT,engBean.getOrigin());
         values.put(ScienceTable.URL,engBean.getUrl());
         db.insert(ScienceTable.COLLECTION_NAME, null, values);
     }
@@ -84,7 +84,7 @@ public class ScienceCache extends BaseCache<EngBean> {
             if (!url.equals("") && engBean.imgs!=null){
                 engBean.setImage_url(url);
             }
-            engBean.setReplies_count(cursor.getInt(ScienceTable.ID_COMMENT_COUNT));
+            engBean.setOrigin(cursor.getString(ScienceTable.ID_COMMENT_COUNT));
             engBean.setIs_collected(cursor.getInt(ScienceTable.ID_IS_COLLECTED));
             engBean.setUrl(cursor.getString(ScienceTable.ID_URL));
             mList.add(engBean);

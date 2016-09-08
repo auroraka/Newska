@@ -72,6 +72,7 @@
     <string name="text_share_from">分享自</string>
     <string name="text_left_only">仅左边有效</string>
     <string name="text_hot"> 热度 </string>
+    <string name="text_origin"> 来源: </string>
     <string name="hint_share_to">分享到</string>
     <string name="notify_add_to_collection">成功添加到收藏</string>
     <string name="text_anywhere">任意位置有效</string>

@@ -58,8 +58,7 @@ public class ScienceAdapter extends BaseListAdapter<EngBean,ViewHolder>{
             }
         }
 
-        //holder.comment.setText(" "+engBean.getReplies_count());
-        holder.comment.setText(" 233");
+        holder.comment.setText(" "+engBean.getOrigin());
         holder.parentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
