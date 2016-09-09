@@ -11,27 +11,27 @@
     <string name="category">Manage Category</string>
     <string name="shake">Shake</string>
     <string name="text_ebook">EBook</string>
-    <string name="id_pos" translatable="false">position</string>
-    <string name="id_url" translatable="false">url</string>
-    <string name="id_html_content" translatable="false">content</string>
+    <string name="id_pos">position</string>
+    <string name="id_url">url</string>
+    <string name="id_html_content">content</string>
     <string name="daily">Daily</string>
     <string name="Text_Net_Exception">Network Exception</string>
-    <string name="id_book" translatable="false">book</string>
+    <string name="id_book">book</string>
     <string name="text_noinfo">\n\n\n\n\t\t\t\t\t\t\t\t\tSorry,No Message Here</string>
     <string name="text_debug_data">"Debug Data"</string>
     <string name="text_pubdate">"Publish Date "</string>
     <string name="id_pages">"Page "</string>
     <string name="text_price">"Price "</string>
     <string name="text_search">Search</string>
-    <string name="id_search_text" translatable="false">search_text</string>
+    <string name="id_search_text">search_text</string>
     <string name="text_search_result">Search Result</string>
     <string name="text_ok">OK</string>
     <string name="text_search_books">"  Search Books"</string>
-    <string name="id_category" translatable="false">category</string>
+    <string name="id_category">category</string>
     <string name="text_collection">Collection</string>
     <string name="text_refresh_success">Refresh Successfully</string>
     <string name="notify_remove_from_collection">Remove it from collection successful!!</string>
-    <string name="id_collection" translatable="false">Collection</string>
+    <string name="id_collection">Collection</string>
     <string name="author_email">yangtianlong111@gmail.com</string>
     <string name="student_id">2014011310</string>
     <string name="student_class">CST.42</string>
@@ -68,7 +68,7 @@
     <string name="text_category_top_stories">Top Stories</string>
     <string name="text_category_world">World</string>
 
-    <string-array name="langs" translatable="false">
+    <string-array name="langs">
         <item>English</item>
         <item>简体中文</item>
         <item>繁體中文</item>
@@ -107,7 +107,7 @@
     <string name="text_attention">Attention</string>
     <string name="text_attention_summary">This app is not allowed for COMMERCIAL Purposes</string>
     <string name="text_license">License</string>
-    <string name="leisure_version">Version 1.1</string>
+    <string name="leisure_version">Version 1.0</string>
     <string name="notify_current_is_latest">Current Version is the latest Version</string>
     <string name="notify_find_new_version">"Find new Version "</string>
     <string name="notif_info_copied">Info copied to Clipboard! You can paste it to an edit area</string>

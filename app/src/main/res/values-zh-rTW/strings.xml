@@ -50,8 +50,7 @@
     <string name="text_search_by_keyword">按關鍵字搜索</string>
     <string name="text_attention">注意</string>
     <string name="text_attention_summary">此應用禁止用於商業目的</string>
-    <string name="text_author_github">作者 GitHub</string>
-    <string name="text_check_update">檢查更新</string>
+   <string name="text_check_update">檢查更新</string>
     <string name="text_copyright">版權</string>
     <string name="text_data">數據</string>
     <string name="text_data_summary">所有數據均來自公開API,版權屬於原作者</string>
@@ -72,6 +71,11 @@
     <string name="text_day_mode">日間模式</string>
     <string name="hint_fail_check_update">獲取版本資訊失敗，請檢查網路設定</string>
 
+	<string-array name="langs">
+        <item>English</item>
+        <item>简体中文</item>
+        <item>繁體中文</item>
+    </string-array>
 
     <string name="text_category_entertainment">娱乐</string>
     <string name="text_category_health">健康</string>
@@ -80,5 +84,37 @@
     <string name="text_category_technology">科技</string>
     <string name="text_category_top_stories">头条</string>
     <string name="text_category_world">世界</string>
+    <string name="author_email">yangtianlong111@gmail.com</string>
+    <string name="id_body">body</string>
+    <string name="id_category_entertainment">entertainment</string>
+    <string name="id_category_health">health</string>
+    <string name="id_category_national">national</string>
+    <string name="id_category_sports">sports</string>
+    <string name="id_category_technology">technology</string>
+    <string name="id_category_top_stories">top_stories</string>
+    <string name="id_category_world">world</string>
+    <string name="id_id">id</string>
+    <string name="id_imageurl">imageUrl</string>
+    <string name="id_language">language</string>
+    <string name="id_science">id_science</string>
+    <string name="id_small_image">id_small_image</string>
+    <string name="id_swipe_back">swipe_back</string>
+    <string name="id_title">title</string>
+    <string name="student_id">title</string>
+    <string name="author_name">楊天龍</string>
+    <string name="music">音樂</string>
+    <string name="leisure_version">版本1.0</string>
+    <string name="pages">頁碼</string>
+    <string name="shake">搖動</string>
+    <string name="share">分享</string>
+    <string name="student_class">電子咨詢系42班</string>
+    <string name="text_app_intro">應用介紹</string>
+    <string name="text_debug_data">調試數據</string>
+    <string name="text_good_job">點個贊</string>
+    <string name="text_license">證書</string>
+    <string name="text_share_leisure">分享聞新</string>
+    <string name="text_student_class">班級</string>
+    <string name="text_student_id">學號</string>
+    <string name="video">視頻</string>
 
 </resources>

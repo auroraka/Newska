@@ -4,11 +4,11 @@
     <string name="reading">阅读</string>
     <string name="science">新闻</string>
     <string name="science_category">分类</string>
-    <string name="video">Video</string>
-    <string name="music">Music</string>
+    <string name="video">视频</string>
+    <string name="music">音乐</string>
     <string name="about">关于</string>
     <string name="category">管理分类</string>
-    <string name="shake">Shake</string>
+    <string name="shake">摇动</string>
     <string name="text_ebook">电子书</string>
     <string name="id_pos">position</string>
     <string name="id_url">url</string>
@@ -54,15 +54,13 @@
     <string name="text_search_by_keyword">按关键字搜索</string>
     <string name="text_attention">注意</string>
     <string name="text_attention_summary">此应用禁止用于商业目的</string>
-    <string name="text_author_github">作者 GitHub</string>
-    <string name="text_blog">博客</string>
     <string name="text_check_update">检查更新</string>
     <string name="text_copyright">版权</string>
     <string name="text_current_version">当前版本</string>
     <string name="text_data">数据</string>
     <string name="text_data_summary">所有数据均来自公开的API,版权属于原作者</string>
     <string name="text_good_job">点个赞</string>
-    <string name="text_share_leisure">分享闲暇</string>
+    <string name="text_share_leisure">分享闻新</string>
     <string name="text_email">邮箱</string>
     <string name="notify_find_new_version">发现新版本　</string>
     <string name="notify_current_is_latest">已经是最新版本</string>
@@ -80,6 +78,12 @@
     <string name="text_anywhere">任意位置有效</string>
     <string name="text_day_mode">日间模式</string>
     <string name="hint_fail_check_update">获取版本信息失败，请检查网络设置</string>
+	
+	<string-array name="langs">
+        <item>English</item>
+        <item>简体中文</item>
+        <item>繁體中文</item>
+    </string-array>
 
     <string name="text_category_entertainment">娱乐</string>
     <string name="text_category_health">健康</string>
@@ -88,5 +92,29 @@
     <string name="text_category_technology">科技</string>
     <string name="text_category_top_stories">头条</string>
     <string name="text_category_world">世界</string>
+    <string name="author_email">yangtianlong111@gmail.com</string>
+    <string name="author_name">杨天龙</string>
+    <string name="id_body">body</string>
+    <string name="id_category_entertainment">entertainment</string>
+    <string name="id_category_health">health</string>
+    <string name="id_category_national">national</string>
+    <string name="id_category_sports">sports</string>
+    <string name="id_category_technology">technology</string>
+    <string name="id_category_top_stories">top_stories</string>
+    <string name="id_category_world">world</string>
+    <string name="id_id">id</string>
+    <string name="id_imageurl">imageUrl</string>
+    <string name="id_language">language</string>
+    <string name="id_science">id_science</string>
+    <string name="id_small_image">id_small_image</string>
+    <string name="id_swipe_back">swipe_back</string>
+    <string name="id_title">title</string>
+    <string name="leisure_version">版本1.0</string>
+    <string name="share">分享</string>
+    <string name="student_class">计算机系42班</string>
+    <string name="student_id">2014011310</string>
+    <string name="text_license">证书</string>
+    <string name="text_student_class">班级</string>
+    <string name="text_student_id">学号</string>
 
 </resources>
