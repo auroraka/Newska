@@ -17,6 +17,8 @@ import com.ihandy.a2014011310.support.HttpUtil;
 import com.ihandy.a2014011310.support.Settings;
 import com.ihandy.a2014011310.ui.support.BaseDetailsActivity;
 
+import cn.sharesdk.framework.ShareSDK;
+
 public class ScienceDetailsActivity extends BaseDetailsActivity {
     private ScienceCache mCache;
     private EngBean engBean;
@@ -29,6 +31,7 @@ public class ScienceDetailsActivity extends BaseDetailsActivity {
         isCollected = (engBean.getIs_collected()==1? true:false);
         Log.w("aaa","collect "+isCollected);
         initView();
+        ShareSDK.initSDK(getApplicationContext(),"sharesdk的appkey");
     }
 
     @Override
@@ -87,8 +90,8 @@ public class ScienceDetailsActivity extends BaseDetailsActivity {
     }
     @Override
     protected String getShareText() {
-        return getShareInfo();
-        //engBean.getTitle();
+        //return getShareInfo();
+        return engBean.getTitle();
     }
     @Override
     protected Uri getShareImgUri() {
@@ -101,5 +104,10 @@ public class ScienceDetailsActivity extends BaseDetailsActivity {
     @Override
     protected String getShareImgUrl() {
         return engBean.getImage_url();
+    }
+
+    @Override
+    protected String getShareUrl() {
+        return engBean.getUrl();
     }
 }

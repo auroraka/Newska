@@ -62,6 +62,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Random;
 
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+
 public abstract class BaseDetailsActivity extends SwipeBackActivity {
 
     protected Toolbar toolbar;
@@ -341,6 +344,33 @@ public abstract class BaseDetailsActivity extends SwipeBackActivity {
         return Uri.fromFile(file);
     }
 
+    private void showShare() {
+        ShareSDK.initSDK(this);
+        OnekeyShare oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
+
+        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间等使用
+        oks.setTitle(getShareTitle());
+        // titleUrl是标题的网络链接，QQ和QQ空间等使用
+        oks.setTitleUrl(getShareUrl());
+        // text是分享文本，所有平台都需要这个字段
+        oks.setText(getShareText());
+        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+        //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+        // url仅在微信（包括好友和朋友圈）中使用
+        oks.setUrl(getShareImgUrl());
+        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+        oks.setComment("");
+        // site是分享此内容的网站名称，仅在QQ空间使用
+        oks.setSite(getString(R.string.app_name));
+        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+        oks.setSiteUrl(getShareUrl());
+
+// 启动分享GUI
+        oks.show(this);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.menu_share) {
@@ -363,33 +393,10 @@ public abstract class BaseDetailsActivity extends SwipeBackActivity {
                         getPicSuccess=true;
                         Bitmap bitmap=BitmapFactory.decodeStream(response.body().byteStream());
                         mUri=saveImage(bitmap);
-                        //Bitmap bitmap = BitmapFactory.decodeStream((InputStream) response.body());
                     }
                 });
                 SystemClock.sleep(1000);
-                Uri imageUri = mUri;
-                Intent shareIntent = new Intent();
-                shareIntent.setAction(Intent.ACTION_SEND);
-                shareIntent.putExtra(Intent.EXTRA_TEXT, getShareText());
-                //shareIntent.putExtra(Intent.EXTRA_TEXT, getShareText());
-                shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
-                shareIntent.setType("image/*");
-                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                startActivity(Intent.createChooser(shareIntent, "send"));
-
-//                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-//                if (getPicSuccess && mUri!=null){
-//                    sharingIntent.setType("image/*");
-//                    sharingIntent.putExtra(Intent.EXTRA_STREAM,mUri);
-//                    sharingIntent.putExtra(Intent.EXTRA_SUBJECT,getShareTitle());
-//                    sharingIntent.putExtra(Intent.EXTRA_TEXT,getShareText());
-//                    //sharingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    startActivity(Intent.createChooser(sharingIntent,getString(R.string.hint_share_to)));
-//                    Log.w("aaa","get uri success"+mUri.toString());
-//                }else{
-//                    sharingIntent.setType("text/plain");
-//                    makeShareText(sharingIntent);
-//                }
+                showShare();
                 return super.onOptionsItemSelected(item);
 
             }
@@ -427,5 +434,6 @@ public abstract class BaseDetailsActivity extends SwipeBackActivity {
     protected abstract String getShareText();
     protected abstract Uri getShareImgUri();
     protected abstract String getShareImgUrl();
+    protected abstract String getShareUrl();
 
 }
