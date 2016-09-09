@@ -2,7 +2,8 @@
     <string name="app_name">聞新</string>
     <string name="news">資訊</string>
     <string name="reading">閱讀</string>
-    <string name="science">科學</string>
+    <string name="science">英语</string>
+    <string name="science_category">分类</string>
     <string name="setting">設定</string>
     <string name="about">關於</string>
     <string name="text_ebook">電子書</string>

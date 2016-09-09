@@ -17,12 +17,16 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.ihandy.a2014011310.api.ScienceApi;
+import com.ihandy.a2014011310.ui.category.CategoryActivity;
+import com.ihandy.a2014011310.ui.category.CategoryFragment;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -63,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.w("maaactivity","onCreate");
         // Language
         mLang = Utils.getCurrentLanguage();
         if (mLang > -1) {
@@ -145,13 +149,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 .withAccountHeader(header)
                 .withSliderBackgroundColor(Settings.isNightMode ? ContextCompat.getColor(this, R.color.night_primary) : ContextCompat.getColor(this, R.color.white))
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.daily).withIcon(R.mipmap.ic_home).withIdentifier(R.mipmap.ic_home)
-                                .withTextColor(Settings.isNightMode ? ContextCompat.getColor(this, R.color.white) : ContextCompat.getColor(this, R.color.text_color)),
                         new PrimaryDrawerItem().withName(R.string.science).withIcon(R.mipmap.ic_science).withIdentifier(R.mipmap.ic_science)
                                 .withTextColor(Settings.isNightMode ? ContextCompat.getColor(this, R.color.white) : ContextCompat.getColor(this, R.color.text_color)),
-                        new PrimaryDrawerItem().withName(R.string.news).withIcon(R.mipmap.ic_news).withIdentifier(R.mipmap.ic_news)
-                                .withTextColor(Settings.isNightMode ? ContextCompat.getColor(this, R.color.white) : ContextCompat.getColor(this, R.color.text_color)),
-                        new PrimaryDrawerItem().withName(R.string.reading).withIcon(R.mipmap.ic_reading).withIdentifier(R.mipmap.ic_reading)
+                        new PrimaryDrawerItem().withName(R.string.science_category).withIcon(R.mipmap.ic_home).withIdentifier(R.mipmap.ic_home)
                                 .withTextColor(Settings.isNightMode ? ContextCompat.getColor(this, R.color.white) : ContextCompat.getColor(this, R.color.text_color)),
                         new PrimaryDrawerItem().withName(R.string.collection).withIcon(R.mipmap.ic_collect_grey).withIdentifier(R.mipmap.ic_collect_grey)
                                 .withTextColor(Settings.isNightMode ? ContextCompat.getColor(this, R.color.white) : ContextCompat.getColor(this, R.color.text_color)),
@@ -167,30 +167,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         switch (drawerItem.getIdentifier()) {
-//                            case R.mipmap.ic_home:
-//                                if (currentFragment instanceof DailyFragment) {
-//                                    return false;
-//                                }
-//                                currentFragment = new DailyFragment();
-//                                break;
-//                            case R.mipmap.ic_reading:
-//                                if (currentFragment instanceof BaseReadingFragment) {
-//                                    return false;
-//                                }
-//                                new BaseNewsFragment();
-//                                currentFragment = new BaseReadingFragment();
-//                                break;
-//                            case R.mipmap.ic_news:
-//                                if (currentFragment instanceof BaseNewsFragment) {
-//                                    return false;
-//                                }
-//                                currentFragment = new BaseNewsFragment();
-//                                break;
                             case R.mipmap.ic_science:
                                 if (currentFragment instanceof BaseScienceFragment) {
                                     return false;
                                 }
                                 currentFragment = new BaseScienceFragment();
+                                break;
+                            case R.mipmap.ic_home:
+                                Intent toCategory = new Intent(MainActivity.this, CategoryActivity.class);
+                                toCategory.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(toCategory);
                                 break;
                             case R.mipmap.ic_collect_grey:
                                 if (currentFragment instanceof BaseCollectionFragment) {
@@ -230,50 +216,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-//            case R.id.menu_home:
-//                drawer.setSelection(R.mipmap.ic_home);
-//                currentFragment = new DailyFragment();
-//                break;
-//            case R.id.menu_reading:
-//                drawer.setSelection(R.mipmap.ic_reading);
-//                currentFragment = new BaseReadingFragment();
-//                break;
-//            case R.id.menu_news:
-//                drawer.setSelection(R.mipmap.ic_news);
-//                currentFragment = new BaseNewsFragment();
-//                break;
             case R.id.menu_science:
                 drawer.setSelection(R.mipmap.ic_science);
                 currentFragment = new BaseScienceFragment();
                 break;
-//            case R.id.menu_search:
-//                showSearchDialog();
-//                return true;
         }
         switchFragment();
         return super.onOptionsItemSelected(item);
     }
-//    private void showSearchDialog(){
-//        final EditText editText = new EditText(this);
-//        editText.setGravity(Gravity.CENTER);
-//        editText.setSingleLine();
-//        new AlertDialog.Builder(this)
-//                .setTitle(getString(R.string.text_search_books))
-//                .setIcon(R.mipmap.ic_search)
-//                .setView(editText)
-//                .setPositiveButton(getString(R.string.text_ok), new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        if(Utils.hasString(editText.getText().toString())){
-//                            Intent intent = new Intent(MainActivity.this,SearchBooksActivity.class);
-//                            Bundle bundle = new Bundle();
-//                            bundle.putString(getString(R.string.id_search_text),editText.getText().toString());
-//                            intent.putExtras(bundle);
-//                            startActivity(intent);
-//                        }
-//                    }
-//                }).show();
-//    }
 
     @Override
     public void onBackPressed() {
@@ -308,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_NORMAL);
 
-        if(Settings.needRecreate) {
+        if(Settings.needRecreate || ScienceApi.needUpdate) {
             Settings.needRecreate = false;
             this.recreate();
         }

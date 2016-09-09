@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/science_category">
+        <CheckBoxPreference
+            android:key="@string/id_category_entertainment"
+            android:title="@string/text_category_entertainment" />
+        <CheckBoxPreference
+            android:key="@string/id_category_health"
+            android:title="@string/text_category_health" />
+        <CheckBoxPreference
+            android:key="@string/id_category_national"
+            android:title="@string/text_category_national" />
+        <CheckBoxPreference
+            android:key="@string/id_category_technology"
+            android:title="@string/text_category_technology" />
+        <CheckBoxPreference
+            android:key="@string/id_category_sports"
+            android:title="@string/text_category_sports" />
+        <CheckBoxPreference
+            android:key="@string/id_category_top_stories"
+            android:title="@string/text_category_top_stories" />
+        <CheckBoxPreference
+            android:key="@string/id_category_world"
+            android:title="@string/text_category_world" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

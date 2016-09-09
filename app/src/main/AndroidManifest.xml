@@ -37,6 +37,7 @@
         <activity android:name=".ui.about.AppIntroActivity" />
         <activity android:name=".ui.about.AuthorIntroActivity" />
         <activity android:name=".ui.science.ScienceDetailsActivity"/>
+        <activity android:name=".ui.category.CategoryActivity" />
 
     </application>
 
