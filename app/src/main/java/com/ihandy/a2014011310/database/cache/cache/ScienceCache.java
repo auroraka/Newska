@@ -3,6 +3,7 @@ package com.ihandy.a2014011310.database.cache.cache;
 
 import android.database.Cursor;
 import android.os.Handler;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ihandy.a2014011310.database.cache.BaseCache;
@@ -106,6 +107,43 @@ public class ScienceCache extends BaseCache<EngBean> {
 //        cursor.close();
     }
 
+    public void loadMore(String urlAppend){
+        Request.Builder builder = new Request.Builder();
+        builder.url(mUrl+"&max_news_id="+urlAppend);
+        Request request = builder.build();
+        HttpUtil.enqueue(request, new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                mHandler.sendEmptyMessage(CONSTANT.ID_FAILURE);
+            }
+
+            @Override
+            public void onResponse(com.squareup.okhttp.Response response) throws IOException {
+                if (response.isSuccessful() == false) {
+                    mHandler.sendEmptyMessage(CONSTANT.ID_FAILURE);
+                    return;
+                }
+
+                Gson gson = new Gson();
+                String str = response.body().string();
+                EngOrigin engOrigin = gson.fromJson(str, EngOrigin.class);
+                EngBean[] engBeans = engOrigin.data.news;
+
+                for (EngBean engBean : engBeans) {
+                    mList.add(engBean);
+                }
+
+                mHandler.sendEmptyMessage(CONSTANT.ID_SUCCESS);
+                Log.w("mmsize","mm"+mList.size());
+                if (engOrigin.data.next_id!=0 && mList.size()<50){
+                    loadMore(""+engOrigin.data.next_id);
+                    Log.w("mmsize","mml"+mList.size()+"->"+engOrigin.data.next_id);
+                }
+                Log.w("mmsize","mme"+mList.size());
+            }
+        });
+    }
+
     @Override
     public void load() {
         Request.Builder builder = new Request.Builder();
@@ -125,38 +163,37 @@ public class ScienceCache extends BaseCache<EngBean> {
                 }
 
                 ArrayList<String> collectionTitles = new ArrayList<String>();
-                for(int i = 0 ; i<mList.size() ; i++ ){
-                    if(mList.get(i).getIs_collected() == 1){
+                for (int i = 0; i < mList.size(); i++) {
+                    if (mList.get(i).getIs_collected() == 1) {
                         collectionTitles.add(mList.get(i).getTitle());
                     }
                 }
 
                 mList.clear();
                 Gson gson = new Gson();
-                String str=response.body().string();
-                EngOrigin engOrigin=gson.fromJson(str,EngOrigin.class);
+                String str = response.body().string();
+                EngOrigin engOrigin = gson.fromJson(str, EngOrigin.class);
                 EngBean[] engBeans = engOrigin.data.news;
+
                 for (EngBean engBean : engBeans) {
                     mList.add(engBean);
                 }
 
-//                mList.clear();
-//                Gson gson = new Gson();
-//                EngBean[] engBeans = (gson.fromJson(response.body().string(), ScienceBean.class)).getResult();
-//                for (EngBean engBean : engBeans) {
-//                    mList.add(engBean);
-//                }
-
-                for(String title:collectionTitles){
-                    for(int i=0 ; i<mList.size() ; i++){
-                        if(title.equals(mList.get(i).getTitle())){
+                for (String title : collectionTitles) {
+                    for (int i = 0; i < mList.size(); i++) {
+                        if (title.equals(mList.get(i).getTitle())) {
                             mList.get(i).setIs_collected(1);
                         }
                     }
                 }
                 mHandler.sendEmptyMessage(CONSTANT.ID_SUCCESS);
+                Log.w("mmsize", "kk" + mList.size());
+                if (engOrigin.data.next_id != 0 && mList.size() < 150) {
+                    loadMore("" + engOrigin.data.next_id);
+                }
+                Log.w("mmsize", "kke" + mList.size());
             }
         });
-
+        Log.w("mmsize", "nn" + mList.size());
     }
 }

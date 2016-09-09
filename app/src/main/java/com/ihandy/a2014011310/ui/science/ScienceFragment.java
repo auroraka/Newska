@@ -47,7 +47,12 @@ public class ScienceFragment extends BaseListFragment{
 
     @Override
     protected void getArgs() {
-        mUrl = ScienceApi.science_channel_url+ScienceApi.getChannel_tag()[getArguments().getInt(getString(R.string.id_pos))];
+        int pos=getArguments().getInt(getString(R.string.id_pos));
+        String[] tag=ScienceApi.getChannel_tag();
+        if (pos>=tag.length){
+            pos=0;
+        }
+        mUrl = ScienceApi.science_channel_url+tag[pos];
         mCategory = getArguments().getString(getString(R.string.id_category));
     }
 }

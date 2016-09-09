@@ -168,9 +168,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         switch (drawerItem.getIdentifier()) {
                             case R.mipmap.ic_science:
-                                if (currentFragment instanceof BaseScienceFragment) {
-                                    return false;
-                                }
+//                                if (currentFragment instanceof BaseScienceFragment) {
+//                                    return false;
+//                                }
                                 currentFragment = new BaseScienceFragment();
                                 break;
                             case R.mipmap.ic_home:
@@ -248,6 +248,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     protected void onStart() {
+        if (ScienceApi.needUpdate){
+            if (currentFragment instanceof BaseScienceFragment){
+                currentFragment=new BaseScienceFragment();
+            }
+            this.recreate();
+        }
         super.onStart();
     }
 
@@ -260,6 +266,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         if(Settings.needRecreate || ScienceApi.needUpdate) {
             Settings.needRecreate = false;
+            if (currentFragment instanceof BaseScienceFragment){
+                currentFragment=new BaseScienceFragment();
+            }
             this.recreate();
         }
     }
