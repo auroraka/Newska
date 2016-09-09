@@ -46,6 +46,11 @@ import com.ihandy.a2014011310.ui.collection.BaseCollectionFragment;
 import com.ihandy.a2014011310.ui.science.BaseScienceFragment;
 import com.ihandy.a2014011310.ui.setting.SettingsActivity;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -65,9 +70,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private long lastPressTime = 0;
     private Settings mSettings = Settings.getInstance();
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        Log.w("maaactivity","onCreate");
         // Language
         mLang = Utils.getCurrentLanguage();
         if (mLang > -1) {

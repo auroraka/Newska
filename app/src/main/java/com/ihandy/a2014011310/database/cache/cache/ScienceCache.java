@@ -168,6 +168,8 @@ public class ScienceCache extends BaseCache<EngBean> {
 
     @Override
     public void load() {
+//        loadFromCache();
+//        if (mLoadCacheResult ==true) return;
         Request.Builder builder = new Request.Builder();
         builder.url(mUrl);
         Request request = builder.build();
@@ -178,6 +180,7 @@ public class ScienceCache extends BaseCache<EngBean> {
                 if (mLoadCacheResult==false) {
                     mHandler.sendEmptyMessage(CONSTANT.ID_FAILURE);
                 }
+//                mHandler.sendEmptyMessage(CONSTANT.ID_FAILURE);
             }
 
             @Override
@@ -189,9 +192,13 @@ public class ScienceCache extends BaseCache<EngBean> {
                     }
                     return;
                 }
+//                if (response.isSuccessful() == false) {
+//                    mHandler.sendEmptyMessage(CONSTANT.ID_FAILURE);
+//                    return;
+//                }
 
 
-                getCollectionTitles();
+                    getCollectionTitles();
 //                collectionTitles.clear();
 //                for (int i = 0; i < mList.size(); i++) {
 //                    if (mList.get(i).getIs_collected() == 1) {

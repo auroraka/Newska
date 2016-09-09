@@ -9,8 +9,10 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -54,8 +56,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Random;
 
 public abstract class BaseDetailsActivity extends SwipeBackActivity {
 
@@ -69,6 +74,8 @@ public abstract class BaseDetailsActivity extends SwipeBackActivity {
     protected ImageButton networkBtn;
     protected boolean isCollected;
     Bitmap mBitmap;
+    Uri mUri;
+    static boolean getPicSuccess;
 
 
     protected abstract void onDataRefresh();
@@ -287,23 +294,105 @@ public abstract class BaseDetailsActivity extends SwipeBackActivity {
         return Uri.parse(path);
     }
 
+    Uri writeBitMap(){
+        Log.w("aaa","try write bitmap");
+        Log.w("aaa",getFilesDir().toString());
+        File f=new File(getFilesDir(),"tmp.jpg");
+        //OutputStreamWriter wr;
+        try {
+            //wr=new OutputStreamWriter(new FileOutputStream(f));
+            OutputStream out =new FileOutputStream(f);
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.close();
+            Log.w("aaa","file writted");
+        }catch(IOException e){
+            Log.w("aaa","write bitmap error");
+        }
+        Log.w("aaa","write file path"+f.toString());
+        return Uri.fromFile(f);
+    }
+
+    void makeShareText(Intent sharingIntent){
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT,getShareTitle());
+        sharingIntent.putExtra(Intent.EXTRA_TEXT,getShareText());
+        sharingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(Intent.createChooser(sharingIntent,getString(R.string.hint_share_to)));
+    }
+    Uri saveImage(Bitmap finalBitmap) {
+
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + "/saved_images");
+        myDir.mkdirs();
+        Random generator = new Random();
+        int n = 10000;
+        n = generator.nextInt(n);
+        String fname = "Image-"+ n +".jpg";
+        File file = new File (myDir, fname);
+        if (file.exists ()) file.delete ();
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            out.flush();
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Uri.fromFile(file);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.menu_share) {
-            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-            if (mBitmap==null){
-                sharingIntent.setType("text/plain");
-                Log.w("mimg","null");
+            String str=getShareImgUrl();
+            if (mBitmap==null || str==null || str.equals("")){
             }else{
-                sharingIntent.setType("text/plain");
-                //sharingIntent.setType("image/*");
+                getPicSuccess=false;
+                Request.Builder builder = new Request.Builder();
+                builder.url(str);
+                Request request = builder.build();
+                HttpUtil.enqueue(request, new Callback() {
+                    @Override
+                    public void onFailure(Request request, IOException e) {
+                    }
+                    @Override
+                    public void onResponse(com.squareup.okhttp.Response response) throws IOException {
+                        if (response.isSuccessful() == false) {
+                            return;
+                        }
+                        getPicSuccess=true;
+                        Bitmap bitmap=BitmapFactory.decodeStream(response.body().byteStream());
+                        mUri=saveImage(bitmap);
+                        //Bitmap bitmap = BitmapFactory.decodeStream((InputStream) response.body());
+                    }
+                });
+                SystemClock.sleep(1000);
+                Uri imageUri = mUri;
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, getShareText());
+                //shareIntent.putExtra(Intent.EXTRA_TEXT, getShareText());
+                shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+                shareIntent.setType("image/*");
+                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                startActivity(Intent.createChooser(shareIntent, "send"));
+
+//                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+//                if (getPicSuccess && mUri!=null){
+//                    sharingIntent.setType("image/*");
+//                    sharingIntent.putExtra(Intent.EXTRA_STREAM,mUri);
+//                    sharingIntent.putExtra(Intent.EXTRA_SUBJECT,getShareTitle());
+//                    sharingIntent.putExtra(Intent.EXTRA_TEXT,getShareText());
+//                    //sharingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    startActivity(Intent.createChooser(sharingIntent,getString(R.string.hint_share_to)));
+//                    Log.w("aaa","get uri success"+mUri.toString());
+//                }else{
+//                    sharingIntent.setType("text/plain");
+//                    makeShareText(sharingIntent);
+//                }
+                return super.onOptionsItemSelected(item);
+
             }
-            sharingIntent.putExtra(Intent.EXTRA_SUBJECT,getShareTitle());
-            sharingIntent.putExtra(Intent.EXTRA_TEXT,getShareText());
-            sharingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            //sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getShareInfo());
-            startActivity(Intent.createChooser(sharingIntent,getString(R.string.hint_share_to)));
-            return super.onOptionsItemSelected(item);
         }else if(item.getItemId() == R.id.menu_collect){
             ScienceApi.needUpdateCollect=true;
             if(isCollected){
@@ -337,5 +426,6 @@ public abstract class BaseDetailsActivity extends SwipeBackActivity {
     protected abstract String getShareTitle();
     protected abstract String getShareText();
     protected abstract Uri getShareImgUri();
+    protected abstract String getShareImgUrl();
 
 }

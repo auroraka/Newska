@@ -98,4 +98,8 @@ public class ScienceDetailsActivity extends BaseDetailsActivity {
         }
         return null;
     }
+    @Override
+    protected String getShareImgUrl() {
+        return engBean.getImage_url();
+    }
 }
