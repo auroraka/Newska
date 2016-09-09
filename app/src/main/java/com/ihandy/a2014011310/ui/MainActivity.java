@@ -219,12 +219,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.menu_science:
-                drawer.setSelection(R.mipmap.ic_science);
-                currentFragment = new BaseScienceFragment();
-                break;
-        }
+//        switch(item.getItemId()){
+//            case R.id.menu_science:
+//                drawer.setSelection(R.mipmap.ic_science);
+//                currentFragment = new BaseScienceFragment();
+//                break;
+//        }
         switchFragment();
         return super.onOptionsItemSelected(item);
     }
