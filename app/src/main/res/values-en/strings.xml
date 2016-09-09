@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">Newska</string>
+    <string name="app_name">YangTianlong</string>
+    <string name="newska">Newska</string>
     <string name="news">News</string>
     <string name="reading">Reading</string>
     <string name="science">News</string>
