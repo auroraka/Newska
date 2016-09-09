@@ -14,6 +14,7 @@ public class ScienceApi {
     public static boolean needUpdate=true;
     static String[] updated_channel_tag;
     static String [] updated_channel_title;
+    public static boolean needUpdateCollect=true;
     static void update(){
         int cnt=0;
         for (int i=0;i<sz;i++){

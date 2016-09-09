@@ -23,6 +23,8 @@ import java.util.ArrayList;
 public class ScienceCache extends BaseCache<EngBean> {
 
     private ScienceTable table;
+    boolean mLoadCacheResult;
+    ArrayList<String> collectionTitles= new ArrayList<String>();
 
     public ScienceCache(){
         super();
@@ -39,7 +41,7 @@ public class ScienceCache extends BaseCache<EngBean> {
        // db.execSQL(table.CREATE_TABLE);
         for(int i=0;i<mList.size();i++){
             EngBean engBean = mList.get(i);
-            values.put(ScienceTable.TITLE,engBean.getTitle());
+            values.put(ScienceTable.TITLE,engBean.getTitle().replace("\'","\'\'"));
             if (engBean.imgs==null){
                 values.put(ScienceTable.IMAGE,"");
             }else {
@@ -60,7 +62,7 @@ public class ScienceCache extends BaseCache<EngBean> {
 
     @Override
     protected void putData(EngBean engBean) {
-        values.put(ScienceTable.TITLE,engBean.getTitle());
+        values.put(ScienceTable.TITLE,engBean.getTitle().replace("\'","\'\'"));
         if (engBean.imgs==null){
             values.put(ScienceTable.IMAGE,"");
         }else {
@@ -77,34 +79,41 @@ public class ScienceCache extends BaseCache<EngBean> {
 
     @Override
     public synchronized void loadFromCache() {
-        load();
-        return;
-//        mList.clear();
-//        String sql = null;
-//        if(mCategory == null){
-//            sql = "select * from "+table.NAME;
-//        }else {
-//            sql = "select * from "+table.NAME +" where "+table.CATEGORY+"=\'"+mCategory+"\'";
-//        }
-//        Cursor cursor = query(sql);
-//        while (cursor.moveToNext()){
-//            EngBean engBean = new EngBean();
-//            engBean.setTitle(cursor.getString(ScienceTable.ID_TITLE));
-//
-//            String url=cursor.getString(ScienceTable.ID_IMAGE);
-//            if (!url.equals("") && engBean.imgs!=null){
-//                engBean.setImage_url(url);
-//            }
-//            engBean.setOrigin(cursor.getString(ScienceTable.ID_COMMENT_COUNT));
-//            engBean.setIs_collected(cursor.getInt(ScienceTable.ID_IS_COLLECTED));
-//            url=cursor.getString(ScienceTable.ID_URL);
-//            if (!url.equals("") && engBean.source!=null){
-//                engBean.setUrl(url);
-//            }
-//            mList.add(engBean);
-//        }
-//        mHandler.sendEmptyMessage(CONSTANT.ID_FROM_CACHE);
-//        cursor.close();
+        mList.clear();
+        String sql = null;
+        if(mCategory == null){
+            sql = "select * from "+table.NAME;
+        }else {
+            sql = "select * from "+table.NAME +" where "+table.CATEGORY+"=\'"+mCategory+"\'";
+        }
+        Cursor cursor = query(sql);
+        while (cursor.moveToNext()){
+            EngBean engBean = new EngBean();
+            engBean.setTitle(cursor.getString(ScienceTable.ID_TITLE));
+
+            String url=cursor.getString(ScienceTable.ID_IMAGE);
+            if (!url.equals("") && engBean.imgs!=null){
+                engBean.setImage_url(url);
+            }
+            engBean.setOrigin(cursor.getString(ScienceTable.ID_COMMENT_COUNT));
+            engBean.setIs_collected(cursor.getInt(ScienceTable.ID_IS_COLLECTED));
+            url=cursor.getString(ScienceTable.ID_URL);
+            if (!url.equals("") && engBean.source!=null){
+                engBean.setUrl(url);
+            }
+            mList.add(engBean);
+        }
+        mHandler.sendEmptyMessage(CONSTANT.ID_FROM_CACHE);
+        cursor.close();
+        mLoadCacheResult=(mList.size()!=0);
+    }
+
+    void getCollectionTitles() {
+        collectionTitles.clear();
+        Cursor cursor = query(table.SELECT_ALL_FROM_COLLECTION);
+        while (cursor.moveToNext()){
+            collectionTitles.add(cursor.getString(table.ID_TITLE));
+        }
     }
 
     public void loadMore(String urlAppend){
@@ -114,13 +123,19 @@ public class ScienceCache extends BaseCache<EngBean> {
         HttpUtil.enqueue(request, new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
-                mHandler.sendEmptyMessage(CONSTANT.ID_FAILURE);
+                loadFromCache();
+                if (mLoadCacheResult==false) {
+                    mHandler.sendEmptyMessage(CONSTANT.ID_FAILURE);
+                }
             }
 
             @Override
             public void onResponse(com.squareup.okhttp.Response response) throws IOException {
                 if (response.isSuccessful() == false) {
-                    mHandler.sendEmptyMessage(CONSTANT.ID_FAILURE);
+                    loadFromCache();
+                    if (mLoadCacheResult==false) {
+                        mHandler.sendEmptyMessage(CONSTANT.ID_FAILURE);
+                    }
                     return;
                 }
 
@@ -130,6 +145,13 @@ public class ScienceCache extends BaseCache<EngBean> {
                 EngBean[] engBeans = engOrigin.data.news;
 
                 for (EngBean engBean : engBeans) {
+                    for (String title : collectionTitles) {
+                        if (title.equals(engBean.getTitle())) {
+                            engBean.setIs_collected(1);
+                            Log.w("aaa","make collect "+engBean.getTitle());
+                            break;
+                        }
+                    }
                     mList.add(engBean);
                 }
 
@@ -152,22 +174,31 @@ public class ScienceCache extends BaseCache<EngBean> {
         HttpUtil.enqueue(request, new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
-                mHandler.sendEmptyMessage(CONSTANT.ID_FAILURE);
+                loadFromCache();
+                if (mLoadCacheResult==false) {
+                    mHandler.sendEmptyMessage(CONSTANT.ID_FAILURE);
+                }
             }
 
             @Override
             public void onResponse(com.squareup.okhttp.Response response) throws IOException {
                 if (response.isSuccessful() == false) {
-                    mHandler.sendEmptyMessage(CONSTANT.ID_FAILURE);
+                    loadFromCache();
+                    if (mLoadCacheResult==false) {
+                        mHandler.sendEmptyMessage(CONSTANT.ID_FAILURE);
+                    }
                     return;
                 }
 
-                ArrayList<String> collectionTitles = new ArrayList<String>();
-                for (int i = 0; i < mList.size(); i++) {
-                    if (mList.get(i).getIs_collected() == 1) {
-                        collectionTitles.add(mList.get(i).getTitle());
-                    }
-                }
+
+                getCollectionTitles();
+//                collectionTitles.clear();
+//                for (int i = 0; i < mList.size(); i++) {
+//                    if (mList.get(i).getIs_collected() == 1) {
+//                        collectionTitles.add(mList.get(i).getTitle());
+//                    }
+//                }
+                Log.w("aaa","all collect "+collectionTitles.size());
 
                 mList.clear();
                 Gson gson = new Gson();
@@ -176,16 +207,16 @@ public class ScienceCache extends BaseCache<EngBean> {
                 EngBean[] engBeans = engOrigin.data.news;
 
                 for (EngBean engBean : engBeans) {
+                    for (String title : collectionTitles) {
+                        if (title.equals(engBean.getTitle())) {
+                            engBean.setIs_collected(1);
+                            Log.w("aaa","make collect "+engBean.getTitle());
+                            break;
+                        }
+                    }
                     mList.add(engBean);
                 }
 
-                for (String title : collectionTitles) {
-                    for (int i = 0; i < mList.size(); i++) {
-                        if (title.equals(mList.get(i).getTitle())) {
-                            mList.get(i).setIs_collected(1);
-                        }
-                    }
-                }
                 mHandler.sendEmptyMessage(CONSTANT.ID_SUCCESS);
                 Log.w("mmsize", "kk" + mList.size());
                 if (engOrigin.data.next_id != 0 && mList.size() < 150) {

@@ -261,6 +261,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onResume() {
         super.onResume();
+        Log.w("aaa","MainActicity onResume");
         mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_NORMAL);
 
@@ -269,6 +270,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             if (currentFragment instanceof BaseScienceFragment){
                 currentFragment=new BaseScienceFragment();
             }
+            this.recreate();
+        }
+        if (ScienceApi.needUpdateCollect){
+            ScienceApi.needUpdateCollect=false;
             this.recreate();
         }
     }

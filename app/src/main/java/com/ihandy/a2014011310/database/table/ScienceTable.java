@@ -56,9 +56,9 @@ public class ScienceTable {
 
     public static  String updateCollectionFlag(String title,int flag){
         return "update "+NAME+" set "+IS_COLLECTED+" ="+flag+" where "+
-                TITLE+"=\'"+title+"\'";
+                TITLE+"=\'"+title.replace("\'","\'\'")+"\'";
     }
     public static String deleteCollectionFlag(String title){
-        return "delete from "+COLLECTION_NAME+" where title=\'"+title+"\'";
+        return "delete from "+COLLECTION_NAME+" where title=\'"+title.replace("\'","\'\'")+"\'";
     }
 }

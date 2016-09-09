@@ -8,7 +8,7 @@ import com.ihandy.a2014011310.model.science.EngBean;
 import java.io.Serializable;
 
 public class EngOrigin implements Serializable {
-   public Data data;
+    public Data data;
     public Meta meta;
     public class Data implements Serializable{
         public EngBean news[];

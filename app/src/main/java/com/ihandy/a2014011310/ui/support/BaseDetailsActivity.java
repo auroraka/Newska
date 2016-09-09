@@ -37,11 +37,13 @@ import android.widget.ProgressBar;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.ihandy.a2014011310.NewskaApplication;
 import com.ihandy.a2014011310.R;
+import com.ihandy.a2014011310.api.ScienceApi;
 import com.ihandy.a2014011310.support.DisplayUtil;
 import com.ihandy.a2014011310.support.HttpUtil;
 import com.ihandy.a2014011310.support.ImageUtil;
 import com.ihandy.a2014011310.support.Settings;
 import com.ihandy.a2014011310.support.Utils;
+import com.ihandy.a2014011310.ui.science.ScienceDetailsActivity;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Headers;
 import com.squareup.okhttp.Request;
@@ -303,7 +305,11 @@ public abstract class BaseDetailsActivity extends SwipeBackActivity {
             startActivity(Intent.createChooser(sharingIntent,getString(R.string.hint_share_to)));
             return super.onOptionsItemSelected(item);
         }else if(item.getItemId() == R.id.menu_collect){
+            ScienceApi.needUpdateCollect=true;
             if(isCollected){
+                if (this instanceof ScienceDetailsActivity){
+                    Log.w("aaa","sc activity");
+                }
                 removeFromCollection();
                 isCollected = false;
                 updateCollectionMenu(item);

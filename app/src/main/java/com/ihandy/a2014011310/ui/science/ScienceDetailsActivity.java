@@ -27,6 +27,7 @@ public class ScienceDetailsActivity extends BaseDetailsActivity {
         mCache = new ScienceCache();
         engBean = (EngBean) getIntent().getSerializableExtra(getString(R.string.id_science));
         isCollected = (engBean.getIs_collected()==1? true:false);
+        Log.w("aaa","collect "+isCollected);
         initView();
     }
 
@@ -64,12 +65,14 @@ public class ScienceDetailsActivity extends BaseDetailsActivity {
 
     @Override
     protected void removeFromCollection() {
+        Log.w("aaa","remove from collection");
         mCache.execSQL(ScienceTable.updateCollectionFlag(engBean.getTitle(), 0));
         mCache.execSQL(ScienceTable.deleteCollectionFlag(engBean.getTitle()));
     }
 
     @Override
     protected void addToCollection() {
+        engBean.setIs_collected(1);
         mCache.execSQL(ScienceTable.updateCollectionFlag(engBean.getTitle(),1));
         mCache.addToCollection(engBean);
     }

@@ -4,6 +4,7 @@ package com.ihandy.a2014011310.ui.collection;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
 import com.ihandy.a2014011310.R;
 import com.ihandy.a2014011310.support.adapter.PagerAdapter;
@@ -27,11 +28,14 @@ public class BaseCollectionFragment extends AbsTopNavigationFragment{
         return pagerAdapter;
     }
 
+
     /**
      * destroy child fragments
      */
     @Override
     public void onDetach() {
+        Log.w("aaa","BaseCollectionFragment onDetach");
+
         super.onDetach();
         if(getChildFragmentManager().getFragments()!=null){
             getChildFragmentManager().getFragments().clear();
