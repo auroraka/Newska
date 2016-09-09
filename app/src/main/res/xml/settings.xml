@@ -6,9 +6,6 @@
             android:key="@string/id_language"
             android:title="@string/text_language" />
         <Preference
-            android:key="search"
-            android:title="@string/text_search"/>
-        <Preference
             android:key="@string/id_swipe_back"
             android:title="@string/text_swipe_to_return"/>
         <CheckBoxPreference

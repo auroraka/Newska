@@ -24,7 +24,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
 
     private Preference mLanguage;
-    private Preference mSearch;
     private Preference mSwipeBack;
     private CheckBoxPreference mAutoRefresh;
     private CheckBoxPreference mNightMode;
@@ -41,7 +40,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         mSettings = Settings.getInstance();
 
         mLanguage = findPreference(Settings.LANGUAGE);
-        mSearch = findPreference(Settings.SEARCH);
         mSwipeBack = findPreference(Settings.SWIPE_BACK);
 
         mAutoRefresh = (CheckBoxPreference) findPreference(Settings.AUTO_REFRESH);
@@ -52,7 +50,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         mClearCache = findPreference(Settings.CLEAR_CACHE);
 
         mLanguage.setSummary(this.getResources().getStringArray(R.array.langs)[Utils.getCurrentLanguage()]);
-        mSearch.setSummary(this.getResources().getStringArray(R.array.search)[Settings.searchID]);
         mSwipeBack.setSummary(this.getResources().getStringArray(R.array.swipe_back)[Settings.swipeID]);
 
         mAutoRefresh.setChecked(Settings.isAutoRefresh);
@@ -69,7 +66,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
 
         mLanguage.setOnPreferenceClickListener(this);
-        mSearch.setOnPreferenceClickListener(this);
         mSwipeBack.setOnPreferenceClickListener(this);
         mClearCache.setOnPreferenceClickListener(this);
     }
@@ -117,8 +113,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             Utils.clearCache();
             Settings.needRecreate = true;
             Snackbar.make(getView(), R.string.text_clear_cache_successful,Snackbar.LENGTH_SHORT).show();
-        }else if(preference == mSearch){
-            ShowSearchSettingDialog();
         }else if(preference == mSwipeBack){
             showSwipeSettingsDialog();
         }
@@ -147,23 +141,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
     }
 
-    private void ShowSearchSettingDialog(){
-        new AlertDialog.Builder(getActivity())
-                .setTitle(getString(R.string.text_search))
-                .setSingleChoiceItems(
-                        getResources().getStringArray(R.array.search), Settings.searchID,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Settings.searchID = which;
-                                mSettings.putInt(Settings.SEARCH,which);
-                                mSearch.setSummary(getResources().getStringArray(R.array.search)[Settings.searchID]);
-                                dialog.dismiss();
-                            }
-                        }
-                ).show();
-    }
-
     private void showSwipeSettingsDialog(){
         new AlertDialog.Builder(getActivity())
                 .setTitle(getString(R.string.text_swipe_to_return))
@@ -178,7 +155,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                                 if(which != Settings.swipeID){
                                     Settings.swipeID = which;
                                     mSettings.putInt(Settings.SWIPE_BACK,which);
-                                    mSearch.setSummary(getResources().getStringArray(R.array.swipe_back)[Settings.swipeID]);
                                     getActivity().recreate();
                                 }
                             }

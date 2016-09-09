@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">闻新</string>
+    <string name="app_name">杨天龙</string>
     <string name="news">新闻</string>
     <string name="reading">阅读</string>
     <string name="science">新闻</string>
@@ -37,7 +37,7 @@
     <string name="text_auto_refresh">自动刷新</string>
     <string name="text_auto_refresh_summary">在WIFI下自动从网络加载数据</string>
     <string name="text_clear_cache">清除缓存</string>
-    <string name="text_clear_cache_summary">清除"闲暇"的缓存</string>
+    <string name="text_clear_cache_summary">清除"闻新"的缓存</string>
     <string name="text_language">语言</string>
     <string name="text_night_mode">夜间模式</string>
     <string name="text_no_pic_mode">无图模式</string>

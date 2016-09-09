@@ -50,7 +50,7 @@ public class ScienceDetailsActivity extends BaseDetailsActivity {
             }
         });
         String url=engBean.getUrl();
-        if (url!=null) {
+        if (url!=null && !url.equals("")) {
             contentView.loadUrl(url);
         }else{
             contentView.loadUrl("file:///android_asset/notfound.html");
