@@ -6,6 +6,7 @@
     <string name="science_category">分类</string>
     <string name="setting">設定</string>
     <string name="about">關於</string>
+    <string name="category">分类</string>
     <string name="text_ebook">電子書</string>
     <string name="id_pos">position</string>
     <string name="id_url">url</string>
@@ -70,4 +71,14 @@
     <string name="text_origin">来源: </string>
     <string name="text_day_mode">日間模式</string>
     <string name="hint_fail_check_update">獲取版本資訊失敗，請檢查網路設定</string>
+
+
+    <string name="text_category_entertainment">娱乐</string>
+    <string name="text_category_health">健康</string>
+    <string name="text_category_national">国际</string>
+    <string name="text_category_sports">运动</string>
+    <string name="text_category_technology">科技</string>
+    <string name="text_category_top_stories">头条</string>
+    <string name="text_category_world">世界</string>
+
 </resources>

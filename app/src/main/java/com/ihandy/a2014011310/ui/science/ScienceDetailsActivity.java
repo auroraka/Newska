@@ -1,5 +1,6 @@
 package com.ihandy.a2014011310.ui.science;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.widget.NestedScrollView;
@@ -76,5 +77,22 @@ public class ScienceDetailsActivity extends BaseDetailsActivity {
     @Override
     protected String getShareInfo() {
         return "["+engBean.getTitle()+"]:"+engBean.getUrl()+" ( "+getString(R.string.text_share_from)+getString(R.string.app_name)+")";
+    }
+    @Override
+    protected String getShareTitle() {
+        return "Share fron Newska";
+    }
+    @Override
+    protected String getShareText() {
+        return getShareInfo();
+        //engBean.getTitle();
+    }
+    @Override
+    protected Uri getShareImgUri() {
+        String url=engBean.getImage_url();
+        if (url!=null && !url.equals("")){
+            Uri u=Uri.parse(url);
+        }
+        return null;
     }
 }

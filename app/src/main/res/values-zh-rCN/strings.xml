@@ -2,11 +2,12 @@
     <string name="app_name">闻新</string>
     <string name="news">新闻</string>
     <string name="reading">阅读</string>
-    <string name="science">英语</string>
+    <string name="science">新闻</string>
     <string name="science_category">分类</string>
     <string name="video">Video</string>
     <string name="music">Music</string>
     <string name="about">关于</string>
+    <string name="category">分类</string>
     <string name="shake">Shake</string>
     <string name="text_ebook">电子书</string>
     <string name="id_pos">position</string>
@@ -79,4 +80,13 @@
     <string name="text_anywhere">任意位置有效</string>
     <string name="text_day_mode">日间模式</string>
     <string name="hint_fail_check_update">获取版本信息失败，请检查网络设置</string>
+
+    <string name="text_category_entertainment">娱乐</string>
+    <string name="text_category_health">健康</string>
+    <string name="text_category_national">国际</string>
+    <string name="text_category_sports">运动</string>
+    <string name="text_category_technology">科技</string>
+    <string name="text_category_top_stories">头条</string>
+    <string name="text_category_world">世界</string>
+
 </resources>

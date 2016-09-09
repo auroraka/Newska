@@ -1,6 +1,7 @@
 package com.ihandy.a2014011310.ui.support;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,12 +11,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,6 +47,9 @@ import com.squareup.okhttp.Headers;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -60,6 +66,7 @@ public abstract class BaseDetailsActivity extends SwipeBackActivity {
     protected ProgressBar progressBarTopPic;
     protected ImageButton networkBtn;
     protected boolean isCollected;
+    Bitmap mBitmap;
 
 
     protected abstract void onDataRefresh();
@@ -235,20 +242,21 @@ public abstract class BaseDetailsActivity extends SwipeBackActivity {
             }
             @Override
             public void onResponse(Response response) throws IOException {
-                final Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
+
+                mBitmap = BitmapFactory.decodeStream(response.body().byteStream());
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        if(bitmap == null){
+                        if(mBitmap == null){
                             setDefaultColor();
                             return;
                         }
                         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
-                            topImage.setBackground(new BitmapDrawable(getResources(), bitmap));
+                            topImage.setBackground(new BitmapDrawable(getResources(), mBitmap));
                         } else{
                             topImage.setImageURI(Uri.parse(url));
                         }
-                        mainContent.setBackgroundColor(ImageUtil.getImageColor(bitmap));
+                        mainContent.setBackgroundColor(ImageUtil.getImageColor(mBitmap));
                         progressBarTopPic.setVisibility(View.GONE);
                     }
                 });
@@ -270,12 +278,28 @@ public abstract class BaseDetailsActivity extends SwipeBackActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.menu_share) {
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-            sharingIntent.setType("text/plain");
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getShareInfo());
+            if (mBitmap==null){
+                sharingIntent.setType("text/plain");
+                Log.w("mimg","null");
+            }else{
+                sharingIntent.setType("text/plain");
+                //sharingIntent.setType("image/*");
+            }
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT,getShareTitle());
+            sharingIntent.putExtra(Intent.EXTRA_TEXT,getShareText());
+            sharingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            //sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getShareInfo());
             startActivity(Intent.createChooser(sharingIntent,getString(R.string.hint_share_to)));
             return super.onOptionsItemSelected(item);
         }else if(item.getItemId() == R.id.menu_collect){
@@ -304,5 +328,8 @@ public abstract class BaseDetailsActivity extends SwipeBackActivity {
     protected abstract void removeFromCollection();
     protected abstract void addToCollection();
     protected abstract String getShareInfo();
+    protected abstract String getShareTitle();
+    protected abstract String getShareText();
+    protected abstract Uri getShareImgUri();
 
 }

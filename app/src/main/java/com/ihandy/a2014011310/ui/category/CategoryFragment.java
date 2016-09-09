@@ -34,7 +34,6 @@ public class CategoryFragment extends PreferenceFragment implements Preference.O
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("aaa","onCreated");
         addPreferencesFromResource(R.xml.category);
 
         mEntertainment = (CheckBoxPreference) findPreference(getString(R.string.id_category_entertainment));
@@ -99,7 +98,6 @@ public class CategoryFragment extends PreferenceFragment implements Preference.O
 
     @Override
     public boolean onPreferenceClick(Preference preference) {
-        Log.w("aaa","click");
         return false;
     }
 
